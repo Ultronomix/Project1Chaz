@@ -1,4 +1,10 @@
-README.md
+README.md/
+
+logs/
+
+*.class
+*.jar
+
 
 
 target/
