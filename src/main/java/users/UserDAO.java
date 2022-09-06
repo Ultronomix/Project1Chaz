@@ -12,9 +12,11 @@ import java.util.List;
 public class UserDAO {
 
     public List<User> getAllUsers() {
+
         String sql = "Select eu.user_id, eu.username, eu.email, eu.password, eu.given_name, eu.surname, eu.is_active, eur.role_id" +
                 "FROM ers_users eu " +
-                "JOIN ers_user_roles";
+                "JOIN ers_user_roles eur" +
+                "ON eu.role_id = eur.role_id";
 
 List<User> allUsers = new ArrayList<>();
 
@@ -33,8 +35,8 @@ List<User> allUsers = new ArrayList<>();
             user.setGivenName(rs.getString("given_name"));
             user.setSurname(rs.getString("surname"));
             user.setIsActive(rs.getString("is_active"));
-
-
+            user.setRole(new Role(rs.getString("role_id"), rs.getString("role")));
+            allUsers.add(user);
 
 
         }
