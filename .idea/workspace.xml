@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/AuthServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/AuthServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/Authorize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/Authorize.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +39,8 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -60,7 +59,7 @@
       <workItem from="1662229737682" duration="2197000" />
       <workItem from="1662234782353" duration="232000" />
       <workItem from="1662393120235" duration="14862000" />
-      <workItem from="1662474152273" duration="17886000" />
+      <workItem from="1662474152273" duration="18307000" />
     </task>
     <task id="LOCAL-00001" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <created>1662494617417</created>

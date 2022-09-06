@@ -2,6 +2,7 @@ README.md/
 
 logs/
 
+*.idea
 *.class
 *.jar
 
