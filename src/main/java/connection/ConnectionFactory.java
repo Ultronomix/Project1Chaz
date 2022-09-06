@@ -32,4 +32,9 @@ public class ConnectionFactory {
         }
 
     }
+
+    public static Statement getInstance() {
+        return null;
+    }
+
 }
