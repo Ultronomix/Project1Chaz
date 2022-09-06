@@ -10,6 +10,7 @@ import users.UserResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class AuthServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 401);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", System.currentTimeMillis());
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
 
         } catch (DataSourceException e) {

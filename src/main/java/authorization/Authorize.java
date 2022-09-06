@@ -27,7 +27,7 @@ public class Authorize {
         }
 
         return userDAO.findUserByUsernameAndPassword(credentials.getUsername(), credentials.getPassword())
-                .map(userResponse::new)
+                .map(UserResponse::new)
                 .orElseThrow(AuthenticationException::new);
     }
 
