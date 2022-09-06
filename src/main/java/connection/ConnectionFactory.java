@@ -1,40 +1,42 @@
 package connection;
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Properties;
 
 
 public class ConnectionFactory {
 
+    private static ConnectionFactory connFactory;
+    private Properties dbProps = new Properties();
 
-    public static void main(String[] args) throws SQLException {
-        String jdbcURL = "jdbc:postgresql://java-angular-220815.cq9t60lp8p7n.us-west-1.rds.amazonaws.com:5432/postgres?currentSchema=project1";
-        String username = "chazc";
-        String password = "The6thHokage!";
+    private ConnectionFactory() {
+        // include logic here to set up the connection factory's DB details (read from the properties file)
+
         try {
-            @SuppressWarnings("unused")
-            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
-            System.out.println("Connected to PostgreSQL server");
+            Class.forName("org.postgresql.Driver");
+            dbProps.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
+        } catch (IOException e) {
 
+            throw new RuntimeException("could not read from properties file.", e);
+        } catch (ClassNotFoundException e) {
 
-            // connection.close();
-        } catch (SQLException e) {
-            System.out.println("Error in connecting to PostgreSQL server");
-            e.printStackTrace();
-            Connection connection = null;
-            Statement statement = connection.createStatement();
-            int rows = statement.executeUpdate(e.getMessage());
-            if (rows > 0) {
-                System.out.println("A new account has been created.");
-            }
+            throw new RuntimeException("Failed to load PostgreSQL JDBC driver.", e);
         }
 
+
     }
 
-    public static Statement getInstance() {
-        return null;
+    public static ConnectionFactory getInstance() {
+        if (connFactory == null) {
+            connFactory = new ConnectionFactory();
+        }
+        return connFactory;
     }
 
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(dbProps.getProperty("db-url"), dbProps.getProperty("db-username"), dbProps.getProperty("db-password"));
+
+    }
 }

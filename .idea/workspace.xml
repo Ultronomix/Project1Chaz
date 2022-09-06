@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="" />
+    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/authorization/AuthServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/authorization/Credentials.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exceptions/AuthenticationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exceptions/DataSourceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exceptions/InvalidRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/shinobi/ShinobiApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/users/UserResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/users/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/Authorize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/Authorize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/connection/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connection/ConnectionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/ShinobiApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +54,11 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -48,6 +70,7 @@
       <workItem from="1662229737682" duration="2197000" />
       <workItem from="1662234782353" duration="232000" />
       <workItem from="1662393120235" duration="14862000" />
+      <workItem from="1662474152273" duration="14850000" />
     </task>
     <servers />
   </component>
