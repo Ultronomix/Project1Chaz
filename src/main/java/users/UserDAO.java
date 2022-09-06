@@ -13,7 +13,7 @@ public class UserDAO {
 
     public List<User> getAllUsers() {
 
-        String sql = "Select eu.user_id, eu.username, eu.email, eu.password, eu.given_name, eu.surname, eu.is_active, eur.role_id" +
+        String sql = "Select eu.user_id, eu.username, eu.email, eu.password, eu.given_name, eu.surname, eu.is_active, eu.role_id, eur.role_" +
                 "FROM ers_users eu " +
                 "JOIN ers_user_roles eur" +
                 "ON eu.role_id = eur.role_id";
