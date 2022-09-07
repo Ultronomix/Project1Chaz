@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class UserServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 400);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", LocalDateTime.now()); // TODO replace with LocalDateTime.now()
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
 
         } catch (ResourceNotFoundException e) {
@@ -54,7 +55,7 @@ public class UserServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 404);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", LocalDateTime.now()); // TODO replace with LocalDateTime.now()
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
 
         } catch (DataSourceException e) {
@@ -63,7 +64,7 @@ public class UserServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 500);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", LocalDateTime.now()); // TODO replace with LocalDateTime.now()
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
         }
     }
@@ -84,7 +85,7 @@ public class UserServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 400);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", LocalDateTime.now()); // TODO replace with LocalDateTime.now()
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
 
         } catch (ResourcePersistenceException e) {
@@ -93,7 +94,7 @@ public class UserServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 409);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", LocalDateTime.now()); // TODO replace with LocalDateTime.now()
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
 
         } catch (DataSourceException e) {
@@ -102,7 +103,7 @@ public class UserServlet extends HttpServlet {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("statusCode", 500);
             errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis()); // TODO replace with LocalDateTime.now()
+            errorResponse.put("timestamp", LocalDateTime.now()); // TODO replace with LocalDateTime.now()
             resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
 
         }
