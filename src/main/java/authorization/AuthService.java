@@ -1,15 +1,14 @@
 package authorization;
 
-import exceptions.AuthenticationException;
-import exceptions.InvalidRequestException;
-import users.User;
+import common.exceptions.AuthenticationException;
+import common.exceptions.InvalidRequestException;
 import users.UserDAO;
 import users.UserResponse;
-public class Authorize {
+public class AuthService {
 
     private final UserDAO userDAO;
 
-    public Authorize(UserDAO userDAO){
+    public AuthService(UserDAO userDAO){
         this.userDAO = userDAO;
     }
     public UserResponse authenticate(Credentials credentials){

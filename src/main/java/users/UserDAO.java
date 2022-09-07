@@ -1,6 +1,6 @@
 package users;
-import connection.ConnectionFactory;
-import exceptions.DataSourceException;
+import common.connection.ConnectionFactory;
+import common.exceptions.DataSourceException;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 
 public class UserDAO {
 
@@ -43,12 +42,75 @@ public class UserDAO {
 
     }
 
-    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
+    public Optional<User> findUserByUserId(UUID id) {
 
         String sql = baseSelect + "WHERE eu.username = ? AND eu.password = ?";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setObject(1,id);
+            ResultSet rs = pstmt.executeQuery();
+            return mapResultSet(rs).stream().findFirst();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataSourceException (e);
+
+        }
+
+    }
+
+    public Optional<User> findUserByUsername(String username) {
+        String sql = baseSelect + "WHERE eu.username = ?";
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setObject(1,username);
+            ResultSet rs = pstmt.executeQuery();
+            return mapResultSet(rs).stream().findFirst();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataSourceException (e);
+
+
+    }
+
+    }
+    public boolean isUsernameTaken(String username){
+        return findUserByUsername(username).isPresent();
+    }
+
+    public Optional <User> findUserByEmail(String email) {
+
+        String sql = baseSelect + "WHERE eu.email = ?";
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            return mapResultSet(rs).stream().findFirst();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataSourceException(e);
+        }
+
+    }
+
+    public boolean isEmailTaken(String email){
+        return findUserByEmail(email).isPresent();
+    }
+    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
+
+        String sql = baseSelect + "WHERE au.username = ? AND au.password = ?";
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            // JDBC Statement objects are vulnerable to SQL injection
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -56,13 +118,12 @@ public class UserDAO {
             return mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException e) {
-            throw new DataSourceException (e);
-
+            // TODO log this exception
+            throw new DataSourceException(e);
         }
 
     }
-
-    public String save(User user) {
+        public String save(User user) {
 
         String sql = "INSERT INTO ers_users (user_id, user_name, email, password, given_name, surname, is_active, role, role_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, '0001')";

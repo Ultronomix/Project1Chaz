@@ -1,4 +1,4 @@
-package exceptions;
+package common.exceptions;
 
     public class AuthenticationException extends RuntimeException {
         public AuthenticationException() {

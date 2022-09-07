@@ -1,4 +1,4 @@
-package connection;
+package common.connection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;

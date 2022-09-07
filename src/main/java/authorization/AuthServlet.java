@@ -1,10 +1,9 @@
 package authorization;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import exceptions.AuthenticationException;
-import exceptions.DataSourceException;
-import exceptions.InvalidRequestException;
-import users.User;
+import common.exceptions.AuthenticationException;
+import common.exceptions.DataSourceException;
+import common.exceptions.InvalidRequestException;
 import users.UserResponse;
 
 import javax.servlet.ServletException;
@@ -17,10 +16,10 @@ import java.util.Map;
 
 public class AuthServlet extends HttpServlet {
 
-    private final Authorize authorize;
+    private final AuthService authService;
 
-    public AuthServlet(Authorize authorize) {
-        this.authorize = authorize;
+    public AuthServlet(AuthService authService) {
+        this.authService = authService;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class AuthServlet extends HttpServlet {
         try {
 
             Credentials credentials = jsonMapper.readValue(req.getInputStream(), Credentials.class);
-            UserResponse responseBody = authorize.authenticate(credentials);
+            UserResponse responseBody = authService.authenticate(credentials);
             resp.setStatus(200);
             resp.getWriter().write(jsonMapper.writeValueAsString(responseBody));
 

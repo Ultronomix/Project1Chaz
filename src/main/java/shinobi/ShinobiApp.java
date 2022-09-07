@@ -1,8 +1,9 @@
 package shinobi;
 
-import authorization.Authorize;
+import authorization.AuthService;
 import authorization.AuthServlet;
 import users.UserDAO;
+import users.UserService;
 import users.UserServlet;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
@@ -20,8 +21,9 @@ public class ShinobiApp {
 
 
         UserDAO userDAO = new UserDAO();
-        Authorize authService = new Authorize(userDAO);
-        UserServlet userServlet = new UserServlet(userDAO);
+        AuthService authService = new AuthService(userDAO);
+        UserService userService = new UserService(userDAO);
+        UserServlet userServlet = new UserServlet(userService);
         AuthServlet authServlet = new AuthServlet(authService);
 
 
