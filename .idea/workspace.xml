@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/common/ErrorResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/authentication/AuthServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/AuthServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/AuthServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/Credentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/Credentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" afterDir="false" />
-    </list>
+    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +104,7 @@
       <workItem from="1662474152273" duration="19081000" />
       <workItem from="1662560789480" duration="13211000" />
       <workItem from="1662580506159" duration="3871000" />
-      <workItem from="1662646557808" duration="11983000" />
+      <workItem from="1662646557808" duration="12107000" />
     </task>
     <task id="LOCAL-00001" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <created>1662494617417</created>
@@ -126,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662494617417</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
+      <created>1662706842745</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1662706842745</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
