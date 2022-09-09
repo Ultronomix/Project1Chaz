@@ -14,6 +14,22 @@ public class User {
     private String roleID;
     private Role role;
 
+    public User(){
+        super();
+    }
+
+    public User(String userID, String givenName, String surname, String email, String username, String password, Role role) {
+        this.userID = userID;
+        this.givenName = givenName;
+        this.surname = surname;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+
+
+    }
+
     public String getUserID() {
         return userID;
     }

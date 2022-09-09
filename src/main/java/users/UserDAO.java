@@ -118,7 +118,7 @@ public class UserDAO {
             return mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException e) {
-            // TODO log this exception
+            e.printStackTrace();
             throw new DataSourceException(e);
         }
 

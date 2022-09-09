@@ -43,6 +43,7 @@ public class UserService {
             return userDAO.findUserByUserId(uuid)
                     .map(UserResponse::new)
                     .orElseThrow(ResourceNotFoundException::new);
+
         }catch (IllegalArgumentException e){
             throw new InvalidRequestException("An invalid UUID String was provided.");
         }

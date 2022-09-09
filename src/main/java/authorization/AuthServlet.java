@@ -2,15 +2,19 @@ package authorization;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import common.exceptions.AuthenticationException;
+import common.ErrorResponse;
 import common.exceptions.DataSourceException;
 import common.exceptions.InvalidRequestException;
 import users.UserResponse;
+import users.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,37 +37,34 @@ public class AuthServlet extends HttpServlet {
             Credentials credentials = jsonMapper.readValue(req.getInputStream(), Credentials.class);
             UserResponse responseBody = authService.authenticate(credentials);
             resp.setStatus(200);
+
+            HttpSession userSession = req.getSession();
+            userSession.setAttribute("authUser", responseBody);
+
             resp.getWriter().write(jsonMapper.writeValueAsString(responseBody));
 
         } catch (InvalidRequestException | JsonMappingException e) {
 
 
             resp.setStatus(400);
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("statusCode", 400);
-            errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis());
-            resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
 
         } catch (AuthenticationException e) {
 
             resp.setStatus(401);
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("statusCode", 401);
-            errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis());
-            resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(401, e.getMessage())));
 
         } catch (DataSourceException e) {
 
             resp.setStatus(500);
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("statusCode", 500);
-            errorResponse.put("message", e.getMessage());
-            errorResponse.put("timestamp", System.currentTimeMillis());
-            resp.getWriter().write(jsonMapper.writeValueAsString(errorResponse));
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
 
         }
 
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.getSession().invalidate(); //"log out"
     }
 }

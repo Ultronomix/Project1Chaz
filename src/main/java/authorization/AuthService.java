@@ -21,7 +21,7 @@ public class AuthService {
             throw new InvalidRequestException("The provided username was not the correct length (must be at least 4 characters.");
         }
 
-        if (credentials.getPassword().length() < 6) {
+        if (credentials.getPassword().length() < 8) {
             throw new InvalidRequestException("The provided password was not the correct length (must be at least 6 characters.");
         }
 

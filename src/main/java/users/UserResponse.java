@@ -1,6 +1,8 @@
 package users;
+import java.io.Serializable;
+import java.util.Objects;
 
-public class UserResponse {
+public class UserResponse implements Serializable {
 
     private String userId;
     private String username;
@@ -86,6 +88,19 @@ public class UserResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserResponse that = (UserResponse) o;
+        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(givenName, that.givenName) && Objects.equals(surname, that.surname) && Objects.equals(roleID, that.roleID) && Objects.equals(role, that.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, username, email, password, givenName, surname, roleID, role);
     }
 
     @Override
