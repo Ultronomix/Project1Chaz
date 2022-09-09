@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation." />
+    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/common/SecurityTools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/users/UpdateUserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/authorization/Credentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/authorization/Credentials.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/AuthServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/NewUserRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Register.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ShinobiApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/UserDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/UserResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/UserServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/authentication/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/authentication/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/authentication/AuthServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/authentication/Credentials.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/Request.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/ResourceCreationResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/connection/AppContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/connection/ConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/exceptions/AuthenticationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/exceptions/DataSourceException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/exceptions/InvalidRequestException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/exceptions/ResourceNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/common/exceptions/ResourcePersistenceException.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +58,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2EGlJsEsZjMzhMG7TchbmcchJdt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -40,6 +77,14 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
+      "PostgreSQL"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -51,7 +96,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AuthServiceTest.test_authenticate_throwsInvalidRequestException_givenInvalidCredentials">
+  <component name="RunManager" selected="JUnit.AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials">
     <configuration name="AuthServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project1" />
       <extension name="coverage">
@@ -63,6 +108,38 @@
       <option name="PACKAGE_NAME" value="authentication" />
       <option name="MAIN_CLASS_NAME" value="authentication.AuthServiceTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceTest.test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="authentication" />
+      <option name="MAIN_CLASS_NAME" value="authentication.AuthServiceTest" />
+      <option name="METHOD_NAME" value="test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="authentication" />
+      <option name="MAIN_CLASS_NAME" value="authentication.AuthServiceTest" />
+      <option name="METHOD_NAME" value="test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -85,7 +162,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" />
         <item itemvalue="JUnit.AuthServiceTest.test_authenticate_throwsInvalidRequestException_givenInvalidCredentials" />
+        <item itemvalue="JUnit.AuthServiceTest.test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials" />
         <item itemvalue="JUnit.AuthServiceTest" />
       </list>
     </recent_temporary>
@@ -105,6 +184,7 @@
       <workItem from="1662560789480" duration="13211000" />
       <workItem from="1662580506159" duration="3871000" />
       <workItem from="1662646557808" duration="12107000" />
+      <workItem from="1662733625885" duration="17317000" />
     </task>
     <task id="LOCAL-00001" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <created>1662494617417</created>
@@ -180,5 +260,10 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project1$AuthServiceTest_test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials.ic" NAME="AuthServiceTest.test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials Coverage Results" MODIFIED="1662737948851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>authentication.*</FILTER>
+    </SUITE>
   </component>
 </project>

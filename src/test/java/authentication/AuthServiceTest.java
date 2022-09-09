@@ -74,16 +74,18 @@ public class AuthServiceTest {
     @Test
     public void test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials() {
         // TODO implement this test
-        Credentials credentialsStub = new Credentials("WhoIs", "You?");
 
+        // Arrange
+        Credentials credentialsStub = new Credentials("unknown", "credentials");
+        when(mockUserDAO.findUserByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.empty());
+
+        // Act
         assertThrows(AuthenticationException.class, () -> {
-
+            sut.authenticate(credentialsStub);
         });
+
+        // Assert
         verify(mockUserDAO, times(1)).findUserByUsernameAndPassword(anyString(), anyString());
 
     }
-
-
 }
-
-

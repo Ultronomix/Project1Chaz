@@ -17,7 +17,7 @@ public class AuthService {
             throw new InvalidRequestException("The provided credentials object was found to be null");
         }
 
-        if(credentials.getUsername().length() < 4) {
+        if (credentials.getUsername().length() < 4) {
             throw new InvalidRequestException("The provided username was not the correct length (must be at least 4 characters.");
         }
 

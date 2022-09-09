@@ -38,16 +38,29 @@ public class UserService {
             throw new InvalidRequestException("A non-empty user id must be provided!");
         }
 
-        try{
-            UUID uuid = UUID.fromString(userId);
-            return userDAO.findUserByUserId(uuid)
+            return userDAO.findUserByUserId("user_id")
                     .map(UserResponse::new)
                     .orElseThrow(ResourceNotFoundException::new);
 
-        }catch (IllegalArgumentException e){
-            throw new InvalidRequestException("An invalid UUID String was provided.");
-        }
+
     }
+    public UserResponse getUserByUsername (String username) {
+        if (username == null || username.trim().length() < 3) {
+            throw new InvalidRequestException("A username must be at least 4 characters");
+        }
+        return userDAO.findUserByUsername(username).map(UserResponse::new)
+                .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public UserResponse getUserByRole (String role) {
+        if (role == null || role.trim().length() <= 0) {
+            throw new InvalidRequestException("A role must be provided.");
+        }
+        return userDAO.findUserByRole(role).map(UserResponse::new)
+                .orElseThrow(ResourceNotFoundException::new);
+    }
+
+
 
     public ResourceCreationResponse register(NewUserRequest newUser ){
 
@@ -83,4 +96,35 @@ public class UserService {
 
     }
 
+
+    public ResourceCreationResponse updateUser (UpdateUserRequest updateUser, String userIdToSearchFor) {
+
+        if (updateUser == null) {
+            throw new InvalidRequestException("Provided request payload was null.");
+        }
+        if (updateUser.getEmail() != null && updateUser.getEmail().trim().length() > 3) {
+            userDAO.updateUserEmail(updateUser.getEmail(), userIdToSearchFor);
+            throw new InvalidRequestException("Email cannot be empty");
+        }
+        if (updateUser.getGivenName() != null && updateUser.getGivenName().trim().length() > 4) {
+             updateUser(updateUser.getGivenName);
+             throw new InvalidRequestException("A empty given name or surname");
+        }
+        if (updateUser.getSurname() != null && updateUser.getSurname().trim().length() > 4) {
+
+        }
+        if (updateUser.getIsActive() == false || updateUser.getIsActive() == true) {
+
+        }
+
+        String userToUpdate = updateUser.extractEntity().getEmail();
+        System.out.println(userToUpdate);
+        String updateEmail = userDAO.updateUserEmail(userToUpdate, updateUser.getEmail());
+        System.out.println("update: " + updateEmail);
+
+        return new ResourceCreationResponse(updateEmail);
+    }
+
+    private void updateUser(UpdateUserRequest getGivenName) {
+    }
 }
