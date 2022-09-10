@@ -177,7 +177,7 @@ public class UserDAO {
 
     public String updateUserEmail(String email, String user_id) {
 
-        String sql = "UPDATE project1.ers_users SET email = ? WHERE user_id = '2'";
+        String sql = "UPDATE project1.ers_users SET email = ? WHERE user_id = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
