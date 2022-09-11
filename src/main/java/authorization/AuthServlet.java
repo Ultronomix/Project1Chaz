@@ -5,6 +5,8 @@ import common.exceptions.AuthenticationException;
 import common.ErrorResponse;
 import common.exceptions.DataSourceException;
 import common.exceptions.InvalidRequestException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import users.UserResponse;
 import users.User;
 
@@ -20,6 +22,7 @@ import java.util.Map;
 
 public class AuthServlet extends HttpServlet {
 
+    private static Logger logger = LogManager.getLogger(AuthServlet.class);
     private final AuthService authService;
 
     public AuthServlet(AuthService authService) {
@@ -28,6 +31,9 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("A POST request was received by /taskmaster/auth at {}", LocalDateTime.now());
+
+
         ObjectMapper jsonMapper = new ObjectMapper();
         resp.setContentType("application/json");
 
@@ -38,23 +44,31 @@ public class AuthServlet extends HttpServlet {
             UserResponse responseBody = authService.authenticate(credentials);
             resp.setStatus(200);
 
+
+            logger.info("Establishing user session for user: {}", responseBody.getUsername());
+
             HttpSession userSession = req.getSession();
             userSession.setAttribute("authUser", responseBody);
 
             resp.getWriter().write(jsonMapper.writeValueAsString(responseBody));
 
+            logger.info("POST request successfully processed at {}", LocalDateTime.now());
+
         } catch (InvalidRequestException | JsonMappingException e) {
 
+            logger.warn("Error processing request at {}, error message: {}", LocalDateTime.now(), e.getMessage());
 
             resp.setStatus(400);
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
 
         } catch (AuthenticationException e) {
+            logger.warn("Failed login at {}, error message: {}", LocalDateTime.now(), e.getMessage());
 
             resp.setStatus(401);
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(401, e.getMessage())));
 
         } catch (DataSourceException e) {
+            logger.error("A data source error occurred at {}, error message: {}", LocalDateTime.now(), e.getMessage());
 
             resp.setStatus(500);
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));

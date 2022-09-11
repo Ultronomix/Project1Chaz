@@ -5,25 +5,19 @@ import java.util.Objects;
 public class UserResponse implements Serializable {
 
     private String userId;
-    private String username;
-    private String email;
-    private String password;
     private String givenName;
     private String surname;
-    private String roleID;
+    private String email;
+    private String username;
     private String role;
 
-    public UserResponse (User subject) {
-        this.userId = subject.getUserID();
-        this.username = subject.getUsername();
-        this.email = subject.getEmail();
-        this.password = subject.getPassword();
+    public UserResponse(User subject) {
+        this.userId = subject.getUserId();
         this.givenName = subject.getGivenName();
         this.surname = subject.getSurname();
-        this.roleID = subject.getRoleID();
+        this.email = subject.getEmail();
+        this.username = subject.getUsername();
         this.role = subject.getRole().getName();
-
-
     }
 
     public String getUserId() {
@@ -32,30 +26,6 @@ public class UserResponse implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getGivenName() {
@@ -74,12 +44,20 @@ public class UserResponse implements Serializable {
         this.surname = surname;
     }
 
-    public String getRoleID() {
-        return roleID;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getRole() {
@@ -95,25 +73,24 @@ public class UserResponse implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserResponse that = (UserResponse) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(givenName, that.givenName) && Objects.equals(surname, that.surname) && Objects.equals(roleID, that.roleID) && Objects.equals(role, that.role);
+        return Objects.equals(userId, that.userId) && Objects.equals(givenName, that.givenName) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(username, that.username) && Objects.equals(role, that.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, email, password, givenName, surname, roleID, role);
+        return Objects.hash(userId, givenName, surname, email, username, role);
     }
 
     @Override
     public String toString() {
         return "UserResponse{" +
                 "userId='" + userId + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", givenName='" + givenName + '\'' +
                 ", surname='" + surname + '\'' +
-                ", roleID='" + roleID + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }
+
 }

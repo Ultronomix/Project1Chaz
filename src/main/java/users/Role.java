@@ -3,20 +3,20 @@ package users;
 import java.util.Objects;
 
 public class Role {
-private String id;
+private String userId;
 private String name;
 
-    public Role(String id, String role) {
-        this.id = id;
+    public Role(String userId, String role) {
+        this.userId = userId;
         this.name = role;
     }
 
     public String getId() {
-        return id;
+        return userId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getName() {
@@ -32,18 +32,18 @@ private String name;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role1 = (Role) o;
-        return Objects.equals(id, role1.id) && Objects.equals(name, role1.name);
+        return Objects.equals(userId, role1.userId) && Objects.equals(name, role1.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(userId, name);
     }
 
     @Override
     public String toString() {
         return "Role{" +
-                "id='" + id + '\'' +
+                "id='" + userId + '\'' +
                 ", role='" + name + '\'' +
                 '}';
     }

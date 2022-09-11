@@ -1,4 +1,7 @@
 package common.connection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +10,8 @@ import java.util.Properties;
 
 
 public class ConnectionFactory {
+
+    private static Logger logger = LogManager.getLogger(ConnectionFactory.class);
 
     private static ConnectionFactory connFactory;
     private Properties dbProps = new Properties();

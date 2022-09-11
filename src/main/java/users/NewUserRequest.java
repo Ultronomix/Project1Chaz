@@ -66,7 +66,7 @@ public class NewUserRequest implements Request<User> {
 @Override
 public User extractEntity(){
    User extractedEntity = new User();
-   extractedEntity.setUserID(UUID.randomUUID().toString());
+   extractedEntity.setUserId(UUID.randomUUID().toString());
    extractedEntity.setGivenName(this.givenName);
    extractedEntity.setSurname(this.surname);
    extractedEntity.setEmail(this.email);

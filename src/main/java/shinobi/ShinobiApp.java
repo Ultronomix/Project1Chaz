@@ -1,12 +1,16 @@
 package shinobi;
 
+import authorization.Credentials;
 import authorization.AuthService;
 import authorization.AuthServlet;
+import users.User;
 import users.UserDAO;
 import users.UserService;
 import users.UserServlet;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+
+import java.util.Optional;
 
 public class ShinobiApp {
 
@@ -37,9 +41,6 @@ public class ShinobiApp {
         webServer.getServer().await();
 
     }
-
 }
-
-
 
 
