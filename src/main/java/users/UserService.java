@@ -6,7 +6,6 @@ import common.exceptions.ResourceNotFoundException;
 import common.exceptions.ResourcePersistenceException;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class UserService {
@@ -24,26 +23,17 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserResponse getUserById(String userid) {
+
+    public UserResponse getUserByUserId(String userid) {
 
         if (userid == null || userid.length() <= 0) {
             throw new InvalidRequestException("A non-empty id must be provided!");
         }
 
-        try {
-
-            UUID uuid = UUID.fromString(userid);
-            return userDAO.findUserById(uuid)
-                    .map(UserResponse::new)
-                    .orElseThrow(ResourceNotFoundException::new);
-
-        } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("An invalid UUID string was provided.");
-        }
-
-
+        return null;
 
     }
+
 
     public ResourceCreationResponse register(NewUserRequest newUser) {
 
@@ -52,8 +42,7 @@ public class UserService {
         }
 
         if (newUser.getGivenName() == null || newUser.getGivenName().length() <= 0 ||
-                newUser.getSurname() == null || newUser.getSurname().length() <= 0)
-        {
+                newUser.getSurname() == null || newUser.getSurname().length() <= 0) {
             throw new InvalidRequestException("A non-empty given name and surname must be provided");
         }
 
@@ -82,16 +71,47 @@ public class UserService {
         return new ResourceCreationResponse(newUserId);
 
     }
-}
 
-//
-//        String userToUpdate = updateUser.extractEntity().getEmail();
-//        System.out.println(userToUpdate);
-//        String updateEmail = userDAO.updateUserEmail(userToUpdate, updateUser.getEmail());
-//        System.out.println("update: " + updateEmail);
-//
-//        return new ResourceCreationResponse(updateEmail);
-//    }
-//
-//    private void updateUser(UpdateUserRequest getGivenName) {
-//    }
+    public UserResponse getUserbyUsername(String usernameToSearchFor) {
+
+        if (usernameToSearchFor == null || usernameToSearchFor.length() <= 0) {
+            throw new InvalidRequestException("A non-empty username must be provided!");
+        }
+
+        return null;
+
+
+    }
+
+    public void updateUser(UpdateUserRequest updateUserRequest) {
+
+        User userToUpdate = userDAO.getUserByUserId(updateUserRequest.getUserId())
+                                   .orElseThrow(ResourceNotFoundException::new);
+
+        System.out.println(userToUpdate);
+
+        if (updateUserRequest.getGivenName() != null) {
+            userToUpdate.setGivenName(updateUserRequest.getGivenName());
+        }
+        if(updateUserRequest.getUserId() != null) {
+            userToUpdate.setUserId(updateUserRequest.getUserId());
+        }
+        if(updateUserRequest.getUsername() != null) {
+            userToUpdate.setUsername(updateUserRequest.getUsername());
+        }
+        if (updateUserRequest.getRole_id() != null) {
+            userToUpdate.setRole(updateUserRequest.getRole_id());
+        }
+        }
+
+        // keep doing this for each field (remember to check for uniqueness for usernames and emails)
+
+        // after you have copied all the updated values into the user for update
+        // persist that user (create a DAO method that runs a SQL UPDATE statement
+
+
+
+    public List<UserResponse> getUsersByRole(String roleToSearchFor) {
+        return null;
+    }
+}

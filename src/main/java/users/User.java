@@ -11,14 +11,14 @@ public class User {
     private String username;
     private String password;
 
-    private String isActive;
+    private boolean isActive;
     private Role role;
 
     public User() {
         super();
     }
 
-    public User(String userId, String givenName, String surname, String email, String username, String password, String isActive, Role role) {
+    public User(String userId, String givenName, String surname, String email, String username, String password, Role role) {
         this.userId = userId;
         this.givenName = givenName;
         this.surname = surname;
@@ -77,11 +77,11 @@ public class User {
         this.password = password;
     }
 
-    public String getIsActive(){
+    public boolean isActive(){
         return isActive;
     }
 
-    public void setIsActive(String isActive){
+    public void setIsActive(boolean isActive){
         this.isActive = isActive;
     }
 
@@ -89,7 +89,7 @@ public class User {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

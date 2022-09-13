@@ -1,16 +1,23 @@
 package users;
 
 import common.Request;
-import java.util.UUID;
+
 
 public class NewUserRequest implements Request<User> {
 
+    private String userId;
     private String givenName;
     private String surname;
     private String email;
     private String username;
     private String password;
 
+    public String getUserId(){
+        return userId;
+    }
+    public void setUserId(String userId){
+        this.userId = userId;
+}
     public String getGivenName() {
         return givenName;
     }
@@ -54,6 +61,7 @@ public class NewUserRequest implements Request<User> {
     @Override
     public String toString(){
         return "NewUserRequest{" +
+                "userId='" + userId + '\'' +
                 "givenName='" + givenName + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
@@ -66,7 +74,7 @@ public class NewUserRequest implements Request<User> {
 @Override
 public User extractEntity(){
    User extractedEntity = new User();
-   extractedEntity.setUserId(UUID.randomUUID().toString());
+   extractedEntity.setUserId(this.userId);
    extractedEntity.setGivenName(this.givenName);
    extractedEntity.setSurname(this.surname);
    extractedEntity.setEmail(this.email);

@@ -5,7 +5,7 @@ import common.Request;
 
 public class UpdateUserRequest implements Request<User> {
 
-    public UpdateUserRequest getGivenName;
+    private String userId;
     private String username;
     private String email;
 
@@ -13,6 +13,16 @@ public class UpdateUserRequest implements Request<User> {
     private String givenName;
     private String surname;
     private boolean isActive;
+
+    private String role_id;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;
@@ -42,13 +52,12 @@ public class UpdateUserRequest implements Request<User> {
     }
 
 
-    public String getGiven_name() {
+    public String getGivenName() {
         return givenName;
     }
 
-
-    public void setGiven_name(String given_name) {
-        this.givenName = given_name;
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
     }
 
 
@@ -62,51 +71,36 @@ public class UpdateUserRequest implements Request<User> {
     }
 
 
-    public boolean isIs_active() {
+    public boolean isActive() {
         return isActive;
     }
 
-
-    public void setIs_active(boolean is_active) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    @Override
-    public String toString() {
-        return "Updated {" +
-                "given_name = " + isActive + "' " +
-                "surname = " + surname + "' " +
-                "password = " + password + "' " +
-                "is_active" + isActive + "' " +
-                "}";
+    public String getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
     }
 
     @Override
     public User extractEntity() {
-        // TODO
         User extractedEntity = new User();
+        extractedEntity.setUserId(this.userId);
+        extractedEntity.setUsername(this.username);
+        extractedEntity.setPassword(this.password);
         extractedEntity.setEmail(this.email);
         extractedEntity.setGivenName(this.givenName);
         extractedEntity.setSurname(this.surname);
-        extractedEntity.setIsActive(String.valueOf(this.isActive));
+        extractedEntity.setRole(this.role_id);
+        extractedEntity.setIsActive(this.isActive);
         return extractedEntity;
     }
 
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getGivenName() {
-        return givenName;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
 }
 
 

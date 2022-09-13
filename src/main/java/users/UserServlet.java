@@ -43,11 +43,13 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-        String idToSearchFor = req.getParameter("user_id");
+        String userIdToSearchFor = req.getParameter("user_id");
+        String roleToSearchFor = req.getParameter("role_");
+        String usernameToSearchFor = req.getParameter("username");
 
         UserResponse requester = (UserResponse) userSession.getAttribute("authUser");
 
-        if (!isDirector(requester) && !requesterOwned(requester, idToSearchFor)) {
+        if (!isDirector(requester) && !requesterOwned(requester, userIdToSearchFor)) {
             resp.setStatus(403); // FORBIDDEN; the system recognizes the user, but they do not have permission to be here
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester is not permitted to communicate with this endpoint.")));
             return;
@@ -55,14 +57,26 @@ public class UserServlet extends HttpServlet {
 
         try {
 
-            if (idToSearchFor == null) {
-                List<UserResponse> allUsers = userService.getAllUsers();
-                resp.addHeader("X-My-Custom-Header", "some-random-value");
-                resp.getWriter().write(jsonMapper.writeValueAsString(allUsers));
-            } else {
-                UserResponse foundUser = userService.getUserById(idToSearchFor);
+            if(userIdToSearchFor != null) {
+                UserResponse foundUser = userService.getUserByUserId(userIdToSearchFor);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
+                return;
             }
+
+            if(usernameToSearchFor != null) {
+                UserResponse foundUser = userService.getUserbyUsername(usernameToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
+                return;
+            }
+
+            if(roleToSearchFor != null) {
+                List<UserResponse> foundUsers = userService.getUsersByRole(roleToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundUsers));
+                return;
+            }
+
+            List<UserResponse> allUsers = userService.getAllUsers();
+            resp.getWriter().write(jsonMapper.writeValueAsString(allUsers));
 
         } catch (InvalidRequestException | JsonMappingException e) {
 
@@ -80,7 +94,6 @@ public class UserServlet extends HttpServlet {
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
 
         }
-
 
     }
 
@@ -114,4 +127,49 @@ public class UserServlet extends HttpServlet {
         }
 
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //! delete
+        resp.getWriter().write("In Progress\n");
+
+        ObjectMapper jsonMapper = new ObjectMapper();
+        resp.setContentType("application/json");
+
+        // Access the HTTP session on the request
+        HttpSession userSession = req.getSession(false);
+
+        // if null, this mean that the requester is not authenticated with server
+        if (userSession == null) {
+            resp.setStatus(401); // Unauthorized
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(401, "Requester is not authenticated with server, log in.")));
+            return;
+        }
+
+        UserResponse requester = (UserResponse) userSession.getAttribute("authUser");
+
+        // Only CEO and ADMIN access
+        if (!requester.getRole().equals("CEO") && !requester.getRole().equals("ADMIN")) {
+            resp.setStatus(403); // Forbidden
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
+            return;
+        }
+
+        // Get updated info
+        try {
+            userService.updateUser(jsonMapper.readValue(req.getInputStream(), UpdateUserRequest.class));
+            resp.setStatus(204); // NO CONTENT; success, but I have nothing to return to the requester
+        } catch (InvalidRequestException | JsonMappingException e) {
+            resp.setStatus(400);// * bad request
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
+        } catch (AuthenticationException e) {
+            resp.setStatus(409); // * conflit; indicate that provided resource could not be saved
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(409, e.getMessage())));
+        } catch (DataSourceException e) {
+            resp.setStatus(500); // * internal error
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
+        }
+        resp.getWriter().write("\nEmail is: "+ requester.getEmail()); // TODO change
+    }
 }
+
