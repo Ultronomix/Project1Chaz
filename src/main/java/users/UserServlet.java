@@ -2,6 +2,7 @@ package users;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import common.ErrorResponse;
 import common.ResourceCreationResponse;
 import common.exceptions.*;
@@ -22,15 +23,17 @@ import static common.SecurityTools.requesterOwned;
 public class UserServlet extends HttpServlet {
 
     private final UserService userService;
+    private final ObjectMapper jsonMapper;
 
     // TODO inject a shared reference to a configured ObjectMapper
-    public UserServlet(UserService userService) {
+    public UserServlet(UserService userService, ObjectMapper jsonMapper) {
         this.userService = userService;
+        this.jsonMapper = jsonMapper;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectMapper jsonMapper = new ObjectMapper();
+
         resp.setContentType("application/json");
 
         // Access the HTTP session on the request (if it exists; otherwise it will be null)
@@ -42,38 +45,47 @@ public class UserServlet extends HttpServlet {
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(401, "Requester is not authenticated with the system, please log in.")));
             return;
         }
+        String userId = req.getParameter("user_id");
+        String role = req.getParameter("role_");
+        String username = req.getParameter("username");
+        String email = req.getParameter("email");
 
-        String userIdToSearchFor = req.getParameter("user_id");
-        String roleToSearchFor = req.getParameter("role_");
-        String usernameToSearchFor = req.getParameter("username");
 
-        UserResponse requester = (UserResponse) userSession.getAttribute("authUser");
+        UserResponse requester = (UserResponse) userSession.getAttribute("loggedInUser");
 
-        if (!isDirector(requester) && !requesterOwned(requester, userIdToSearchFor)) {
+        if (!isDirector(requester) && !requesterOwned(requester, userId)) {
             resp.setStatus(403); // FORBIDDEN; the system recognizes the user, but they do not have permission to be here
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester is not permitted to communicate with this endpoint.")));
             return;
         }
 
+
         try {
 
-            if(userIdToSearchFor != null) {
-                UserResponse foundUser = userService.getUserByUserId(userIdToSearchFor);
+
+            if (userId != null) {
+                UserResponse foundUser = userService.getUserByUserId(userId);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
                 return;
             }
 
-            if(usernameToSearchFor != null) {
-                UserResponse foundUser = userService.getUserbyUsername(usernameToSearchFor);
+            if (username != null) {
+                UserResponse foundUser = userService.getUserByUsername(username);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
                 return;
             }
 
-            if(roleToSearchFor != null) {
-                List<UserResponse> foundUsers = userService.getUsersByRole(roleToSearchFor);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundUsers));
+            if (role != null) {
+                List<UserResponse> foundUser = userService.getUsersByRole(role);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
                 return;
             }
+            if (email != null) {
+                UserResponse foundUser = userService.getUserByEmail(email);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
+                return;
+            }
+
 
             List<UserResponse> allUsers = userService.getAllUsers();
             resp.getWriter().write(jsonMapper.writeValueAsString(allUsers));
@@ -100,7 +112,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ObjectMapper jsonMapper = new ObjectMapper();
+
         resp.setContentType("application/json");
 
         try {
@@ -130,8 +142,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //! delete
-        resp.getWriter().write("In Progress\n");
 
         ObjectMapper jsonMapper = new ObjectMapper();
         resp.setContentType("application/json");
@@ -146,26 +156,30 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-        UserResponse requester = (UserResponse) userSession.getAttribute("authUser");
+        UserResponse requester = (UserResponse) userSession.getAttribute("loggedInUser");
 
-        // Only CEO and ADMIN access
-        if (!requester.getRole().equals("CEO") && !requester.getRole().equals("ADMIN")) {
-            resp.setStatus(403); // Forbidden
-            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
-            return;
-        }
-
-        // Get updated info
         try {
-            userService.updateUser(jsonMapper.readValue(req.getInputStream(), UpdateUserRequest.class));
+
+            UpdateUserRequest requestPayload = jsonMapper.readValue(req.getInputStream(), UpdateUserRequest.class);
+
+            // Only CEO and ADMIN access
+            if (!requester.getRole().equals("HOKAGE(DIRECTOR)") && !requester.getUserId().equals(requestPayload.getUserId())) {
+                resp.setStatus(403); // Forbidden
+                resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
+                return;
+            }
+
+            userService.updateUser(requestPayload);
             resp.setStatus(204); // NO CONTENT; success, but I have nothing to return to the requester
+
         } catch (InvalidRequestException | JsonMappingException e) {
             resp.setStatus(400);// * bad request
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
         } catch (AuthenticationException e) {
-            resp.setStatus(409); // * conflit; indicate that provided resource could not be saved
+            resp.setStatus(409); // * conflict; indicate that provided resource could not be saved
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(409, e.getMessage())));
         } catch (DataSourceException e) {
+            e.printStackTrace();
             resp.setStatus(500); // * internal error
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
         }

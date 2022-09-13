@@ -11,6 +11,8 @@ public class UserResponse implements Serializable {
     private String username;
     private String role;
 
+    private String role_id;
+
     public UserResponse(User subject) {
         this.userId = subject.getUserId();
         this.givenName = subject.getGivenName();
@@ -18,6 +20,7 @@ public class UserResponse implements Serializable {
         this.email = subject.getEmail();
         this.username = subject.getUsername();
         this.role = subject.getRole().getName();
+        this.role_id = subject.getRole().getId();
     }
 
     public String getUserId() {
@@ -68,17 +71,25 @@ public class UserResponse implements Serializable {
         this.role = role;
     }
 
+    public String getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserResponse that = (UserResponse) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(givenName, that.givenName) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(username, that.username) && Objects.equals(role, that.role);
+        return Objects.equals(userId, that.userId) && Objects.equals(givenName, that.givenName) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(username, that.username) && Objects.equals(role, that.role) && Objects.equals(role_id, that.role_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, givenName, surname, email, username, role);
+        return Objects.hash(userId, givenName, surname, email, username, role, role_id);
     }
 
     @Override
@@ -90,6 +101,7 @@ public class UserResponse implements Serializable {
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
+                ", role_id='" + role_id + '\'' +
                 '}';
     }
 

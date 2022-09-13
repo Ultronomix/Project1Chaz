@@ -3,6 +3,7 @@ package shinobi;
 import authorization.Credentials;
 import authorization.AuthService;
 import authorization.AuthServlet;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import users.User;
 import users.UserDAO;
 import users.UserService;
@@ -27,8 +28,9 @@ public class ShinobiApp {
         UserDAO userDAO = new UserDAO();
         AuthService authService = new AuthService(userDAO);
         UserService userService = new UserService(userDAO);
-        UserServlet userServlet = new UserServlet(userService);
-        AuthServlet authServlet = new AuthServlet(authService);
+        ObjectMapper jsonMapper = new ObjectMapper();
+        UserServlet userServlet = new UserServlet(userService, jsonMapper);
+        AuthServlet authServlet = new AuthServlet(authService, jsonMapper);
 
 
         final String rootContext = "/shinobi";

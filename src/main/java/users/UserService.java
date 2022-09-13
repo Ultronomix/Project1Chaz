@@ -30,11 +30,47 @@ public class UserService {
             throw new InvalidRequestException("A non-empty id must be provided!");
         }
 
-        return null;
+        try {
+            return userDAO.getUserByUserId(userid)
+                    .map(UserResponse::new)
+                    .orElseThrow(InvalidRequestException::new);
 
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("An invalid ID string was provided.");
+        }
     }
+        public UserResponse getUserByUsername(String username) {
 
+            if (username == null || username.length() <= 0) {
+                throw new InvalidRequestException("A non-empty username must be provided!");
+            }
 
+            try{
+                return userDAO.getUserByUsername(username)
+                        .map(UserResponse::new)
+                        .orElseThrow(InvalidRequestException::new);
+
+            }catch (IllegalArgumentException e) {
+                throw new InvalidRequestException("An invalid username string was provided");
+            }
+
+        }
+
+    public UserResponse getUserByEmail(String email){
+
+        if (email == null || email.length() <= 0){
+            throw new InvalidRequestException("A non empty email must be provided!");
+        }
+        try{
+            return userDAO.getUserByEmail(email)
+                    .map(UserResponse::new)
+                    .orElseThrow(InvalidRequestException::new);
+
+        }catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("An invalid email string was provided");
+
+        }
+    }
     public ResourceCreationResponse register(NewUserRequest newUser) {
 
         if (newUser == null) {
@@ -72,42 +108,42 @@ public class UserService {
 
     }
 
-    public UserResponse getUserbyUsername(String usernameToSearchFor) {
 
-        if (usernameToSearchFor == null || usernameToSearchFor.length() <= 0) {
-            throw new InvalidRequestException("A non-empty username must be provided!");
-        }
-
-        return null;
-
-
-    }
+   
+    
 
     public void updateUser(UpdateUserRequest updateUserRequest) {
 
-        User userToUpdate = userDAO.getUserByUserId(updateUserRequest.getUserId())
-                                   .orElseThrow(ResourceNotFoundException::new);
+        System.out.println(updateUserRequest);
 
-        System.out.println(userToUpdate);
+        User userToUpdate = userDAO.getUserByUserId(updateUserRequest.getUserId())
+                .orElseThrow(ResourceNotFoundException::new);
 
         if (updateUserRequest.getGivenName() != null) {
             userToUpdate.setGivenName(updateUserRequest.getGivenName());
         }
-        if(updateUserRequest.getUserId() != null) {
-            userToUpdate.setUserId(updateUserRequest.getUserId());
+
+        if (updateUserRequest.getSurname() != null) {
+            userToUpdate.setSurname(updateUserRequest.getSurname());
         }
-        if(updateUserRequest.getUsername() != null) {
+
+        if (updateUserRequest.getUsername() != null) {
+            // you also need to make sure that the new username is not already taken
             userToUpdate.setUsername(updateUserRequest.getUsername());
         }
-        if (updateUserRequest.getRole_id() != null) {
-            userToUpdate.setRole(updateUserRequest.getRole_id());
-        }
+
+        if (updateUserRequest.getEmail() != null) {
+            // you also need to make sure that the new email is not already taken
+            userToUpdate.setEmail(updateUserRequest.getEmail());
         }
 
-        // keep doing this for each field (remember to check for uniqueness for usernames and emails)
+        if (updateUserRequest.getPassword() != null) {
+            userToUpdate.setPassword(updateUserRequest.getPassword());
+        }
 
-        // after you have copied all the updated values into the user for update
-        // persist that user (create a DAO method that runs a SQL UPDATE statement
+        userDAO.updateUser(userToUpdate);
+
+    }
 
 
 
