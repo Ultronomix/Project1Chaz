@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/reimbursements/Reimbursements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/NewUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/NewUserRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UpdateUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UpdateUserRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserServlet.java" afterDir="false" />
-    </list>
+    <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -179,7 +168,7 @@
       <workItem from="1662920097522" duration="2590000" />
       <workItem from="1662922803627" duration="9518000" />
       <workItem from="1662937289161" duration="20000" />
-      <workItem from="1662991486909" duration="15806000" />
+      <workItem from="1662991486909" duration="15966000" />
     </task>
     <task id="LOCAL-00001" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <created>1662494617417</created>
