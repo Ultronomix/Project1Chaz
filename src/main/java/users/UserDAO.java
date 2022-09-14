@@ -106,9 +106,6 @@ public class UserDAO {
 
     }
 
-    public boolean isEmailTaken(String email) {
-        return getUserByEmail(email).isPresent();
-    }
 
     public Optional<User> findUserByUsernameAndPassword(String username, String password) {
 
@@ -150,7 +147,7 @@ public class UserDAO {
 
 
     public String updateUserGivenName(String givenName, String user_id) {
-        String sql = baseSelect + " WHERE given_name = ? ";
+        String sql = baseSelect + " WHERE eu.given_name = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -169,7 +166,7 @@ public class UserDAO {
     }
 
     public String updateUserSurname(String surname, String user_id) {
-        String sql = baseSelect + " WHERE surname = ? ";
+        String sql = baseSelect + " WHERE eu.surname = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -188,7 +185,7 @@ public class UserDAO {
     }
 
     public String updateUserEmail(String email, String user_id) {
-        String sql = baseSelect + " WHERE email = ? ";
+        String sql = baseSelect + " WHERE eu.email = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -207,7 +204,7 @@ public class UserDAO {
     }
 
     public String updateUserPassword(String password, String user_id) {
-        String sql = baseSelect + " WHERE \"password\" = ? ";
+        String sql = baseSelect + " WHERE eu.password = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -226,7 +223,7 @@ public class UserDAO {
     }
 
     public String updateUserIsActive(String isActive, String user_id) {
-        String sql = baseSelect + " WHERE is_active = ? ";
+        String sql = baseSelect + " WHERE eu.is_active = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -308,7 +305,9 @@ public class UserDAO {
                     return getUserByUsername(username).isPresent();
 
                 }
-
+    public boolean isEmailTaken (String email) {
+        return getUserByEmail(email).isPresent();
+    }
 
 
     public void updateUser(User user) {

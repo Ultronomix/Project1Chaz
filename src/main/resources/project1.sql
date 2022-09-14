@@ -77,7 +77,7 @@ WHERE user_id = 'nar1929';
 
 
 
-DROP TABLE ers_reimubrsement_types;
+DROP TABLE ers_reimbursement_types;
 
 
 

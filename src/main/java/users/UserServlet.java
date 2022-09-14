@@ -183,7 +183,7 @@ public class UserServlet extends HttpServlet {
             resp.setStatus(500); // * internal error
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
         }
-        resp.getWriter().write("\nEmail is: "+ requester.getEmail()); // TODO change
+        resp.getWriter().write("\nEmail is: " + requester.getEmail()); // TODO change
     }
 }
 
