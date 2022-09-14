@@ -5,7 +5,7 @@ import common.Request;
 public class NewReimbursementRequest implements Request<Reimbursements> {
 
 
-    private String reimbId;
+    private String reimb_id;
 private int amount;
 private String submitted;
 private String description;
@@ -14,13 +14,13 @@ private String author_id;
 private String type_id;
 
 
-public String getReimbId() {
-    return reimbId;
+public String getReimb_id() {
+    return reimb_id;
 
 }
 
-public void setReimbId(String reimbId) {
-    this.reimbId = reimbId;
+public void setReimb_id(String reimb_id) {
+    this.reimb_id = reimb_id;
 }
 
 public int getAmount(){
@@ -75,7 +75,7 @@ public String getSubmitted() {
     @Override
     public String toString() {
         return "NewReimbursementRequest{" +
-                "reimbId='" + reimbId + '\'' +
+                "reimbId='" + reimb_id + '\'' +
                 ", amount=" + amount +
                 ", submitted='" + submitted + '\'' +
                 ", description='" + description + '\'' +
@@ -88,7 +88,7 @@ public String getSubmitted() {
     @Override
     public Reimbursements extractEntity() {
     Reimbursements extractEntity = new Reimbursements();
-        extractEntity.setReimb_id(this.reimbId);
+        extractEntity.setReimb_id(this.reimb_id);
         extractEntity.setAmount(this.amount);
         extractEntity.setSubmitted(this.submitted);
         extractEntity.setDescription(this.description);
