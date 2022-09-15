@@ -40,8 +40,9 @@ public class ReimbServlet extends HttpServlet {
 
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
-        String idToSearchFor = req.getParameter("reimb_id");
+        String reimb_idToSearchFor = req.getParameter("reimb_id");
         String statusToSearchFor = req.getParameter("status");
+        String typeToSearchFor = req.getParameter("type_");
 
 
         if ((!requester.getRole().equals("HOKAGE(DIRECTOR)") && !requester.getRole().equals("ADVISORS(FINANCE MANAGERS)")) && !requester.getRole().equals("JONIN(EMPLOYEES)")) {
@@ -57,29 +58,35 @@ public class ReimbServlet extends HttpServlet {
             resp.getWriter().write(jsonMapper.writeValueAsString(allReimb));
             //! resp.getWriter().write("\nGet all reimburse request");
 
-            if (idToSearchFor != null) {
-                // TODO add log
-                ReimbursementsResponse foundRequest = reimbService.getReimbById(idToSearchFor);
+            if (reimb_idToSearchFor != null) {
+
+                ReimbursementsResponse foundRequest = reimbService.getReimbById(reimb_idToSearchFor);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundRequest));
                 //! resp.getWriter().write("\nGet reimburse request by id");
             }
             if (statusToSearchFor != null) {
-                // TODO add log
+
                 List<ReimbursementsResponse> foundStatus = reimbService.getReimbByStatus(statusToSearchFor);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus));
                 //! resp.getWriter().write("\nGet reimburse by status");
             }
+            if (typeToSearchFor != null) {
+                // TODO add log
+                List<ReimbursementsResponse> foundType = reimbService.getReimbByType_(typeToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundType));
+                //! resp.getWriter().write("\nGet reimburse by type");
 
+        }
         } catch (InvalidRequestException | JsonMappingException e) {
-            // TODO add log
+
             resp.setStatus(400);
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
         } catch (ResourceNotFoundException e) {
-            // TODO add log
+
             resp.setStatus(404);
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(404, e.getMessage())));
         } catch (DataSourceException e) {
-            // TODO add log
+
             resp.setStatus(500);
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
         }
@@ -121,9 +128,11 @@ public class ReimbServlet extends HttpServlet {
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
         String userIdToSearchFor = req.getParameter("user_id");
+        String reimb_idToSearchFor = req.getParameter("reimb_id");
+
         if ((!requester.getRole().equals("HOKAGE(DIRECTOR)") && !requester.getRole().equals("ADVISORS(FINANCE MANAGERS)"))
                 && !requester.getRole().equals("JONIN(EMPLOYEES)")) {
-            // TODO log
+
             resp.setStatus(403); // Forbidden
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
             return;
@@ -132,18 +141,28 @@ public class ReimbServlet extends HttpServlet {
         resp.getWriter().write(jsonMapper.writeValueAsString(foundReimb));
 
         try {
+
+            if (requester.getUserId().equals(userIdToSearchFor)) {
+
+
+                ResourceCreationResponse responseBody =
+                        reimbService.updateReimb(jsonMapper.readValue(req.getInputStream(), UpdateReimbursementRequest.class), reimb_idToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(responseBody));
+
+                return;
+            }
             ResourceCreationResponse responseBody =
                     reimbService.updateReimb(jsonMapper.readValue(req.getInputStream(), UpdateReimbursementRequest.class), userIdToSearchFor);
          } catch (InvalidRequestException | JsonMappingException e) {
-        // TODO add log
+
         resp.setStatus(400);
         resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
     } catch (AuthenticationException e) {
-        // TODO add log
+
         resp.setStatus(409);
         resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(409, e.getMessage())));
     } catch (DataSourceException e) {
-        // TODO add log
+
         resp.setStatus(500);
         resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
     }

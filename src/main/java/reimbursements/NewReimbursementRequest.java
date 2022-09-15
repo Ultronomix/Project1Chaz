@@ -6,12 +6,14 @@ public class NewReimbursementRequest implements Request<Reimbursements> {
 
 
     private String reimb_id;
-private int amount;
+private double amount;
 private String submitted;
 private String description;
 private String payment_id;
 private String author_id;
-private String type_id;
+
+private String status;
+private String type_;
 
 
 public String getReimb_id() {
@@ -23,11 +25,11 @@ public void setReimb_id(String reimb_id) {
     this.reimb_id = reimb_id;
 }
 
-public int getAmount(){
+public double getAmount(){
     return amount;
 }
 
-public void setAmount(int amount){
+public void setAmount(double amount){
     this.amount = amount;
 
 }
@@ -64,26 +66,37 @@ public String getSubmitted() {
         this.author_id = author_id;
     }
 
-    public String getType_id() {
-        return type_id;
+    public String getStatus() {
+    return status;
     }
 
-    public void setType_id(String type_id) {
-        this.type_id = type_id;
+    public void setStatus(String status){
+    this.status = status;
+    }
+
+    public String getType_() {
+        return type_;
+    }
+
+    public void setType_(String type_) {
+        this.type_ = type_;
     }
 
     @Override
     public String toString() {
         return "NewReimbursementRequest{" +
-                "reimbId='" + reimb_id + '\'' +
+                "reimb_id='" + reimb_id + '\'' +
                 ", amount=" + amount +
                 ", submitted='" + submitted + '\'' +
                 ", description='" + description + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
-                ", type_id='" + type_id + '\'' +
+                ", status='" + status + '\'' +
+                ", type_='" + type_ + '\'' +
                 '}';
     }
+
+
 
     @Override
     public Reimbursements extractEntity() {
@@ -94,7 +107,8 @@ public String getSubmitted() {
         extractEntity.setDescription(this.description);
         extractEntity.setPayment_id(this.payment_id);
         extractEntity.setAuthor_id(this.author_id);
-        extractEntity.setType_id(this.type_id);
+        extractEntity.setStatus(this.status);
+        extractEntity.setType_(this.type_);
         return null;
     }
 }
