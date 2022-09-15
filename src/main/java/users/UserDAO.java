@@ -1,7 +1,7 @@
 package users;
 import common.connection.ConnectionFactory;
 import common.exceptions.DataSourceException;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+
 import java.time.LocalDateTime;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -58,8 +58,8 @@ public class UserDAO {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setObject(1, userId);
             ResultSet rs = pstmt.executeQuery();
-            return mapResultSet(rs).stream().findFirst();
 
+            return mapResultSet(rs).stream().findFirst();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataSourceException(e);
@@ -103,6 +103,24 @@ public class UserDAO {
             e.printStackTrace();
             throw new DataSourceException(e);
         }
+    }
+
+        public Optional<User> getUserByRole(String role) {
+
+            String sql = baseSelect + " WHERE eu.role_id = ? ";
+
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+                // JDBC Statement objects are vulnerable to SQL injection
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, role);
+                ResultSet rs = pstmt.executeQuery();
+                return mapResultSet(rs).stream().findFirst();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DataSourceException(e);
+            }
 
     }
 
@@ -139,22 +157,24 @@ public class UserDAO {
             user.setEmail(rs.getString("email"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password")); // done for security purposes
-            user.setRole(new Role(rs.getString("role_id"), rs.getString("role_")));
+            user.setRole(rs.getString("role_"));
             users.add(user);
         }
         return users;
     }
 
 
-    public String updateUserGivenName(String givenName, String user_id) {
-        String sql = baseSelect + " WHERE eu.given_name = ? ";
+    public String updateUserGivenName(String givenName, String userId) {
+        String sql = "UPDATE project1.ers_users " +
+                " SET given_name = ? " +
+                " WHERE user_id = ? " ;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, givenName);
-            pstmt.setInt(2, Integer.parseInt(user_id));
+            pstmt.setInt(2, Integer.parseInt(userId));
 
             int rs = pstmt.executeUpdate();
 
@@ -166,7 +186,9 @@ public class UserDAO {
     }
 
     public String updateUserSurname(String surname, String user_id) {
-        String sql = baseSelect + " WHERE eu.surname = ? ";
+        String sql = "UPDATE project1.ers_users " +
+                " SET surname = ? " +
+                " WHERE user_id = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -203,62 +225,7 @@ public class UserDAO {
         }
     }
 
-    public String updateUserPassword(String password, String user_id) {
-        String sql = baseSelect + " WHERE eu.password = ? ";
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setString(1, password);
-            pstmt.setInt(2, Integer.parseInt(user_id));
-
-            int rs = pstmt.executeUpdate();
-
-            return "User password updated to " + password + ", Rows affected = " + rs;
-
-        } catch (SQLException e) {
-            throw new DataSourceException(e);
-        }
-    }
-
-    public String updateUserIsActive(String isActive, String user_id) {
-        String sql = baseSelect + " WHERE eu.is_active = ? ";
-
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setBoolean(1, Boolean.parseBoolean(isActive));
-            pstmt.setInt(2, Integer.parseInt(user_id));
-
-            int rs = pstmt.executeUpdate();
-
-            return "User active status updated to " + isActive + ", Rows affected = " + rs;
-
-        } catch (SQLException e) {
-            throw new DataSourceException(e);
-        }
-    }
-
-    public String updateUserRoleId(String roleId, String user_id) {
-        String sql = baseSelect + " WHERE eu.role_id = ? ";
-
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setInt(1, Integer.parseInt(roleId));
-            pstmt.setInt(2, Integer.parseInt(user_id));
-
-            int rs = pstmt.executeUpdate();
-
-            return "User role ID updated to " + roleId + ", Rows affected = " + rs;
-
-        } catch (SQLException e) {
-            throw new DataSourceException(e);
-        }
-    }
     public void log(String level, String message) {
         try {
             File logFile = new File("logs/app.log");
@@ -270,41 +237,43 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-        public String register(User user) {
+    public String register(User user) {
 
-            String sql = " INSERT INTO project1.ers_users (user_id, given_name, surname, email, username, \"password\") " +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        String sql = " INSERT INTO project1.ers_users (user_id, username, given_name, surname, email, \"password\", is_active, role_id) " +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
 
-            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-                PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"user_id"});
-                pstmt.setString(1, user.getUserId());
-                pstmt.setString(2, user.getGivenName());
-                pstmt.setString(3, user.getSurname());
-                pstmt.setString(4, user.getEmail());
-                pstmt.setString(5, user.getUsername());
-                pstmt.setString(6, user.getPassword());
+            PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"user_id"});
+            pstmt.setString(1, user.getUserId());
+            pstmt.setString(5, user.getUsername());
+            pstmt.setString(2, user.getGivenName());
+            pstmt.setString(3, user.getSurname());
+            pstmt.setString(4, user.getEmail());
+            pstmt.setString(6, user.getPassword());
+            pstmt.setString(7, String.valueOf(user.getIsActive()));
+            pstmt.setString(8, user.getRole());
 
+            pstmt.executeUpdate();
 
-                pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            rs.next();
+            user.setUserId(rs.getString("user_id"));
 
-                ResultSet rs = pstmt.getGeneratedKeys();
-                rs.next();
-                user.setUserId(rs.getString("user_id"));
-
-            } catch (SQLException e) {
-                log("ERROR", e.getMessage());
-            }
-
-            log("INFO", "Successfully persisted new user with id: " + user.getUserId());
-
-            return user.getUserId();
-
+        } catch (SQLException e) {
+           log("ERROR", e.getMessage());
         }
-            public boolean isUsernameTaken (String username){
-                    return getUserByUsername(username).isPresent();
 
-                }
+        log("INFO", "Successfully persisted new user with id: " + user.getUserId());
+
+        return user.getUserId();
+
+    }
+
+    public boolean isUsernameTaken (String username){
+        return getUserByUsername(username).isPresent();
+    }
+
     public boolean isEmailTaken (String email) {
         return getUserByEmail(email).isPresent();
     }
@@ -312,24 +281,29 @@ public class UserDAO {
 
     public void updateUser(User user) {
 
-        System.out.println(user);
 
         String sql = "UPDATE project1.ers_users " +
-                " SET given_name = ?, surname = ?, username = ?, \"password\" = ?, email = ? " +
-                " WHERE user_id = ?";
+                " SET username = ?, email = ?, given_name = ?, surname = ?, \"password\" = ?, is_active = ?, role_id = ? " +
+                " WHERE user_id = ? ";
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user.getGivenName());
-            pstmt.setString(2, user.getSurname());
-            pstmt.setString(3, user.getUsername());
-            pstmt.setString(4, user.getPassword());
-            pstmt.setString(5, user.getEmail());
-            pstmt.setString(6, user.getUserId());
-            pstmt.executeUpdate();
+            pstmt.setString(1, user.getUserId());
+            pstmt.setString(2, user.getUsername());
+            pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, user.getGivenName());
+            pstmt.setString(5, user.getSurname());
+            pstmt.setString(6, user.getPassword());
+            pstmt.setBoolean(7, user.getIsActive());
+            pstmt.setString(8, user.getRole());
+
+
+            int rowsUpdated = pstmt.executeUpdate();
+            System.out.println("# of rows updated: " + rowsUpdated);
 
         } catch(SQLException e) {
+            e.printStackTrace();
             logger.warn("unable to persist data at {}, error messages {}" , LocalDateTime.now(), e.getMessage());
         }
 

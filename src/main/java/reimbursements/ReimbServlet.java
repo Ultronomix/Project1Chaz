@@ -40,7 +40,7 @@ public class ReimbServlet extends HttpServlet {
 
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
-        String reimb_idToSearchFor = req.getParameter("reimb_id");
+        String userIdToSearchFor = req.getParameter("user_id");
         String statusToSearchFor = req.getParameter("status");
         String typeToSearchFor = req.getParameter("type_");
 
@@ -54,13 +54,10 @@ public class ReimbServlet extends HttpServlet {
 
         try {
 
-            List<ReimbursementsResponse> allReimb = reimbService.getAllReimbursements();
-            resp.getWriter().write(jsonMapper.writeValueAsString(allReimb));
-            //! resp.getWriter().write("\nGet all reimburse request");
 
-            if (reimb_idToSearchFor != null) {
+            if (userIdToSearchFor != null) {
 
-                ReimbursementsResponse foundRequest = reimbService.getReimbById(reimb_idToSearchFor);
+                ReimbursementsResponse foundRequest = reimbService.getReimbById(userIdToSearchFor);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundRequest));
                 //! resp.getWriter().write("\nGet reimburse request by id");
             }

@@ -75,11 +75,7 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
-            if (role != null) {
-                List<UserResponse> foundUser = userService.getUsersByRole(role);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
-                return;
-            }
+
             if (email != null) {
                 UserResponse foundUser = userService.getUserByEmail(email);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundUser));
@@ -158,19 +154,16 @@ public class UserServlet extends HttpServlet {
 
         UserResponse requester = (UserResponse) userSession.getAttribute("loggedInUser");
 
+        // Only CEO and ADMIN access
+        if (!requester.getRole().equals("HOKAGE(DIRECTOR)")){
+            resp.setStatus(403); // Forbidden
+            resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
+            return;
+        }
+
         try {
-
-            UpdateUserRequest requestPayload = jsonMapper.readValue(req.getInputStream(), UpdateUserRequest.class);
-
-            // Only CEO and ADMIN access
-            if (!requester.getRole().equals("HOKAGE(DIRECTOR)") && !requester.getUserId().equals(requestPayload.getUserId())) {
-                resp.setStatus(403); // Forbidden
-                resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
-                return;
-            }
-
-            userService.updateUser(requestPayload);
-            resp.setStatus(204); // NO CONTENT; success, but I have nothing to return to the requester
+            userService.updateUser(jsonMapper.readValue(req.getInputStream(), UpdateUserRequest.class));
+            resp.setStatus(204); // NO CONTENT
 
         } catch (InvalidRequestException | JsonMappingException e) {
             resp.setStatus(400);// * bad request
@@ -183,7 +176,8 @@ public class UserServlet extends HttpServlet {
             resp.setStatus(500); // * internal error
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
         }
-        resp.getWriter().write("\nEmail is: " + requester.getEmail()); // TODO change
+        resp.getWriter().write("\nEmail is: " + requester.getEmail());
+
+
     }
 }
-

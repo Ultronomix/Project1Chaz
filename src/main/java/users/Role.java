@@ -11,12 +11,12 @@ private String name;
         this.name = role;
     }
 
-    public String getId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setId(String id) {
-        this.userId = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -44,7 +44,7 @@ private String name;
     public String toString() {
         return "Role{" +
                 "id='" + userId + '\'' +
-                ", role='" + name + '\'' +
+                ", role_='" + name + '\'' +
                 '}';
     }
 }

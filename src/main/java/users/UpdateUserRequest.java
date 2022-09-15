@@ -12,6 +12,8 @@ public class UpdateUserRequest implements Request<User> {
     private String email;
     private String password;
 
+    private boolean isActive;
+
     public String getUserId() {
         return userId;
     }
@@ -44,6 +46,14 @@ public class UpdateUserRequest implements Request<User> {
         this.password = password;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public String getGivenName() {
         return givenName;
     }
@@ -63,26 +73,28 @@ public class UpdateUserRequest implements Request<User> {
     @Override
     public User extractEntity() {
         User extractedEntity = new User();
-        extractedEntity.setUserId(this.userId);
         extractedEntity.setUsername(this.username);
         extractedEntity.setPassword(this.password);
         extractedEntity.setEmail(this.email);
         extractedEntity.setGivenName(this.givenName);
         extractedEntity.setSurname(this.surname);
+        extractedEntity.setIsActive(this.isActive);
         return extractedEntity;
     }
 
     @Override
     public String toString() {
         return "UpdateUserRequest{" +
-                "userId='" + userId + '\'' +
+                "givenName='" + givenName + '\'' +
+                ", surname='" + surname + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", givenName='" + givenName + '\'' +
-                ", surname='" + surname + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }
+
+
 
 

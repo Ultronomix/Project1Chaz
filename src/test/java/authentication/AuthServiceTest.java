@@ -41,7 +41,7 @@ public class AuthServiceTest {
 
         // Arrange
         Credentials credentialsStub = new Credentials("valid", "credentials");
-        User userStub = new User("some-uuid", "Val", "Id", "valid123@revature.net", "valid", "credentials", new Role("some-role-id", "QA"));
+        User userStub = new User();
         when(mockUserDAO.findUserByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.of(userStub));
         UserResponse expectedResult = new UserResponse(userStub);
 
