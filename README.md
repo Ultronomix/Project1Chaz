@@ -12,11 +12,11 @@ This is a readme for a future Finance API that will communicate with a web serve
     
     -Allows a logout for all users
     
-    -A function for allowing new, updated and pending reimburesement requests to be examined
+    -A function for allowing new reimbursement requests that can be made by users
     
     -A function for finance managers to approve or deny pending reimbursements requests and can see a generated list of pending requests
     
-    -Functions for finding and accessing users via different paramaters or entities
+    -Functions for finding and accessing users and reimbursements via different paramaters or entities
     
 - SYSTEMS AND AUXILIARY PROGRAMS
 
