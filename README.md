@@ -8,7 +8,7 @@ This is a readme for a future employee reimbursement API that will communicate w
     
     - Allows a login for admin, finance managers and employees.
     
-    - registered users can login using their credentials.
+    - Registered users can login using their credentials.
     
     - Allows a logout for all users.
     
@@ -20,7 +20,7 @@ This is a readme for a future employee reimbursement API that will communicate w
     
 - SYSTEMS AND AUXILIARY PROGRAMS
 
-    - program written in JAVA while database creation written in SQL (PostgreSQL).
+    - Program written in JAVA while database creation written in SQL (PostgreSQL).
 
     - Initial data and table creation performed via DBEAVER (JDBC connection to IntelliJ or applicable IDE).
     
