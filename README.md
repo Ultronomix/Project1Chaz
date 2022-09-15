@@ -1,6 +1,6 @@
 # Project1Chaz
 
-This is a readme for a future Finance API that will communicate with a web server via Postman
+This is a readme for a future employee reimbursement API that will communicate with a web server via Postman
 
 - PROGRAM CONTENTS
 
