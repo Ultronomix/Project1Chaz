@@ -20,6 +20,8 @@ This is a readme for a future Finance API that will communicate with a web serve
     
 - SYSTEMS AND AUXILIARY PROGRAMS
 
+    - program written in JAVA while database creation written in SQL (PostgreSQL).
+
     - Initial data and table creation performed via DBEAVER (JDBC connection to IntelliJ or applicable IDE).
     
     - MAVEN dependencies and plugins such as APACHE TOMCAT, JSON integration, POSTGRESQL, JUNIT5, JAVAX SERVLET API, MOCKITO, AND JACOCO.
