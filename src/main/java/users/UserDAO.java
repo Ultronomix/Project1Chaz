@@ -270,9 +270,9 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-        public String save(User user) {
+        public String register(User user) {
 
-            String sql = "INSERT INTO project1.ers_users (user_id, given_name, surname, email, username, password, role_id) " +
+            String sql = " INSERT INTO project1.ers_users (user_id, given_name, surname, email, username, \"password\") " +
                     " VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -284,7 +284,7 @@ public class UserDAO {
                 pstmt.setString(4, user.getEmail());
                 pstmt.setString(5, user.getUsername());
                 pstmt.setString(6, user.getPassword());
-                pstmt.setString(7, user.getRole().getId());
+
 
                 pstmt.executeUpdate();
 

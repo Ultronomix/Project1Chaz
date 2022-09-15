@@ -132,7 +132,7 @@ public class UserServlet extends HttpServlet {
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(409, e.getMessage())));
 
         } catch (DataSourceException e) {
-
+            e.printStackTrace();
             resp.setStatus(500); // INTERNAL SERVER ERROR; general error indicating a problem with the server
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
 
@@ -149,7 +149,7 @@ public class UserServlet extends HttpServlet {
         // Access the HTTP session on the request
         HttpSession userSession = req.getSession(false);
 
-        // if null, this mean that the requester is not authenticated with server
+        // if null, this meanS that the requester is not authenticated with server
         if (userSession == null) {
             resp.setStatus(401); // Unauthorized
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(401, "Requester is not authenticated with server, log in.")));

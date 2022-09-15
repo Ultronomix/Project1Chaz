@@ -103,7 +103,7 @@ public class UserService {
         }
 
         User userToPersist = newUser.extractEntity();
-        String newUserId = userDAO.save(userToPersist);
+        String newUserId = userDAO.register(userToPersist);
         return new ResourceCreationResponse(newUserId);
 
     }

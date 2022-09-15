@@ -1,6 +1,7 @@
 package reimbursements;
 
 import java.util.Objects;
+import java.time.LocalDateTime;
 
 public class Reimbursements {
     private String reimb_id;
@@ -13,8 +14,8 @@ public class Reimbursements {
     private String description;
 
     private String payment_id;
-    private String author_id;
-    private String resolver_id;
+    private LocalDateTime author_id;
+    private LocalDateTime resolved_id;
     private String status_id;
     private String type_id;
 
@@ -67,19 +68,19 @@ public class Reimbursements {
     }
 
     public String getAuthor_id() {
-        return author_id;
+        return String.valueOf(author_id);
     }
 
     public void setAuthor_id(String author_id) {
-        this.author_id = author_id;
+        this.author_id = LocalDateTime.parse(author_id);
     }
 
-    public String getResolver_id() {
-        return resolver_id;
+    public String getResolved_id() {
+        return String.valueOf(resolved_id);
     }
 
-    public void setResolver_id(String resolver_id) {
-        this.resolver_id = resolver_id;
+    public void setResolved_id(String resolved_id) {
+        this.resolved_id = LocalDateTime.parse(resolved_id);
     }
 
     public String getStatus_id() {
@@ -103,12 +104,12 @@ public class Reimbursements {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursements that = (Reimbursements) o;
-        return amount == that.amount && Objects.equals(reimb_id, that.reimb_id) && Objects.equals(submitted, that.submitted) && Objects.equals(resolved, that.resolved) && Objects.equals(description, that.description) && Objects.equals(payment_id, that.payment_id) && Objects.equals(author_id, that.author_id) && Objects.equals(resolver_id, that.resolver_id) && Objects.equals(status_id, that.status_id) && Objects.equals(type_id, that.type_id);
+        return amount == that.amount && Objects.equals(reimb_id, that.reimb_id) && Objects.equals(submitted, that.submitted) && Objects.equals(resolved, that.resolved) && Objects.equals(description, that.description) && Objects.equals(payment_id, that.payment_id) && Objects.equals(author_id, that.author_id) && Objects.equals(resolved_id, that.resolved_id) && Objects.equals(status_id, that.status_id) && Objects.equals(type_id, that.type_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reimb_id, amount, submitted, resolved, description, payment_id, author_id, resolver_id, status_id, type_id);
+        return Objects.hash(reimb_id, amount, submitted, resolved, description, payment_id, author_id, resolved_id, status_id, type_id);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class Reimbursements {
                 ", description='" + description + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
-                ", resolver_id='" + resolver_id + '\'' +
+                ", resolver_id='" + resolved_id + '\'' +
                 ", status_id='" + status_id + '\'' +
                 ", type_id='" + type_id + '\'' +
                 '}';
