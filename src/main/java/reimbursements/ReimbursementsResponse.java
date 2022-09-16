@@ -26,8 +26,8 @@ public class ReimbursementsResponse implements Serializable {
         this.payment_id = subject.getPayment_id();
         this.author_id = LocalDateTime.parse(subject.getAuthor_id());
         this.resolved_id = LocalDateTime.parse(subject.getResolved_id());
-        this.status_id = subject.getStatus();
-        this.type_id = subject.getType_();
+        this.status_id = subject.getStatus_id();
+        this.type_id = subject.getType_id();
 
 
 

@@ -40,9 +40,9 @@ public class ReimbServlet extends HttpServlet {
 
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
-        String userIdToSearchFor = req.getParameter("user_id");
-        String statusToSearchFor = req.getParameter("status");
-        String typeToSearchFor = req.getParameter("type_");
+        String reimb_idToSearchFor = req.getParameter("reimb_id");
+        String status_idToSearchFor = req.getParameter("status_id");
+        String type_idToSearchFor = req.getParameter("type_id");
 
 
         if ((!requester.getRole().equals("HOKAGE(DIRECTOR)") && !requester.getRole().equals("ADVISORS(FINANCE MANAGERS)")) && !requester.getRole().equals("JONIN(EMPLOYEES)")) {
@@ -55,22 +55,22 @@ public class ReimbServlet extends HttpServlet {
         try {
 
 
-            if (userIdToSearchFor != null) {
+            if (reimb_idToSearchFor != null) {
 
-                ReimbursementsResponse foundRequest = reimbService.getReimbById(userIdToSearchFor);
+                ReimbursementsResponse foundRequest = reimbService.getReimbByReimb_id(reimb_idToSearchFor);
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundRequest));
                 //! resp.getWriter().write("\nGet reimburse request by id");
             }
-            if (statusToSearchFor != null) {
+            if (status_idToSearchFor != null) {
 
-                List<ReimbursementsResponse> foundStatus = reimbService.getReimbByStatus(statusToSearchFor);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus));
+                List<ReimbursementsResponse> foundStatus_id = reimbService.getReimbByStatus_id(status_idToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus_id));
                 //! resp.getWriter().write("\nGet reimburse by status");
             }
-            if (typeToSearchFor != null) {
+            if (type_idToSearchFor != null) {
                 // TODO add log
-                List<ReimbursementsResponse> foundType = reimbService.getReimbByType_(typeToSearchFor);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundType));
+                List<ReimbursementsResponse> foundType_id = reimbService.getReimbByType_id(type_idToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundType_id));
                 //! resp.getWriter().write("\nGet reimburse by type");
 
         }
@@ -134,7 +134,7 @@ public class ReimbServlet extends HttpServlet {
             resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(403, "Requester not permitted to communicate with this endpoint.")));
             return;
         }
-        ReimbursementsResponse foundReimb = reimbService.getReimbById(userIdToSearchFor);
+        ReimbursementsResponse foundReimb = reimbService.getReimbByReimb_id(userIdToSearchFor);
         resp.getWriter().write(jsonMapper.writeValueAsString(foundReimb));
 
         try {

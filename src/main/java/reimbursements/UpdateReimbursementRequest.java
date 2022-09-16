@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class UpdateReimbursementRequest implements Request<Reimbursements> {
 
-    private String status;
+    private String status_id;
     private double amount;
     private String description;
-    private String type_;
+    private String type_id;
 
-    public String getStatus() {
-        return status;
+    public String getStatus_id() {
+        return status_id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus_id(String status_id) {
+        this.status_id = status_id;
     }
 
     public double getAmount() {
@@ -35,31 +35,31 @@ public class UpdateReimbursementRequest implements Request<Reimbursements> {
         this.description = description;
     }
 
-    public String getType_() {
-        return type_;
+    public String getType_id() {
+        return type_id;
     }
 
-    public void setType_(String type_) {
-        this.type_ = type_;
+    public void setType_(String type_id) {
+        this.type_id = type_id;
     }
 
     @Override
     public String toString() {
         return "UpdateReimbursementRequest{" +
-                "status='" + status + '\'' +
+                "status='" + status_id + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
-                ", type_='" + type_ + '\'' +
+                ", type_='" + type_id + '\'' +
                 '}';
     }
 
     @Override
     public Reimbursements extractEntity() {
         Reimbursements extractedEntity = new Reimbursements();
-        extractedEntity.setStatus(this.status);
+        extractedEntity.setStatus_id(this.status_id);
         extractedEntity.setAmount(this.amount);
         extractedEntity.setDescription(this.description);
-        extractedEntity.setType_(this.type_);
+        extractedEntity.setType_id(this.type_id);
 
         return extractedEntity;
     }

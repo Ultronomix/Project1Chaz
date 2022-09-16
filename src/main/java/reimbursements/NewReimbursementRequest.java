@@ -12,8 +12,8 @@ private String description;
 private String payment_id;
 private String author_id;
 
-private String status;
-private String type_;
+private String status_id;
+private String type_id;
 
 
 public String getReimb_id() {
@@ -66,20 +66,20 @@ public String getSubmitted() {
         this.author_id = author_id;
     }
 
-    public String getStatus() {
-    return status;
+    public String getStatus_id() {
+    return status_id;
     }
 
-    public void setStatus(String status){
-    this.status = status;
+    public void setStatus_id(String status_id){
+    this.status_id = status_id;
     }
 
-    public String getType_() {
-        return type_;
+    public String getType_id() {
+        return type_id;
     }
 
-    public void setType_(String type_) {
-        this.type_ = type_;
+    public void setType_id(String type_id) {
+        this.type_id = type_id;
     }
 
     @Override
@@ -91,8 +91,8 @@ public String getSubmitted() {
                 ", description='" + description + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
-                ", status='" + status + '\'' +
-                ", type_='" + type_ + '\'' +
+                ", status_id='" + status_id + '\'' +
+                ", type_id='" + type_id + '\'' +
                 '}';
     }
 
@@ -107,8 +107,8 @@ public String getSubmitted() {
         extractEntity.setDescription(this.description);
         extractEntity.setPayment_id(this.payment_id);
         extractEntity.setAuthor_id(this.author_id);
-        extractEntity.setStatus(this.status);
-        extractEntity.setType_(this.type_);
+        extractEntity.setStatus_id(this.status_id);
+        extractEntity.setType_id(this.type_id);
         return null;
     }
 }

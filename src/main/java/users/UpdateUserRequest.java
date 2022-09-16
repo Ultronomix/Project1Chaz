@@ -14,7 +14,7 @@ public class UpdateUserRequest implements Request<User> {
 
     private boolean isActive;
 
-    
+
 
     public String getUserId() {
         return userId;

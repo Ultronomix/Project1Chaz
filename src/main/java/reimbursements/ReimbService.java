@@ -28,25 +28,25 @@ public class ReimbService {
 
     }
 
-    public ReimbursementsResponse getReimbById (String user_id) {
+    public ReimbursementsResponse getReimbByReimb_id (String reimb_id) {
 
 
-        if (user_id == null || user_id.trim().length() <= 0) {
+        if (reimb_id == null || reimb_id.trim().length() <= 0) {
 
             throw new InvalidRequestException("A user's id must be provided");
         }
 
-        return reimbDAO.getReimbById(user_id).map(ReimbursementsResponse::new).orElseThrow(ResourceNotFoundException::new);
+        return reimbDAO.getReimbByReimbId(reimb_id).map(ReimbursementsResponse::new).orElseThrow(ResourceNotFoundException::new);
 
 
     }
 
-    public List<ReimbursementsResponse> getReimbByStatus (String status) {
+    public List<ReimbursementsResponse> getReimbByStatus_id (String status_id) {
 
         // TODO add log
-        if (status == null || (!status.toUpperCase().trim().equals("APPROVED")
-                && !status.toUpperCase().trim().equals("PENDING")
-                && !status.toUpperCase().trim().equals("DENIED"))) {
+        if (status_id == null || (!status_id.toUpperCase().trim().equals("APPROVED")
+                && !status_id.toUpperCase().trim().equals("PENDING")
+                && !status_id.toUpperCase().trim().equals("DENIED"))) {
             // TODO add log
             throw new InvalidRequestException("Status cannot be empty. Enter 'Approved', 'Pending', " +
                     " or 'Denied'");
@@ -54,7 +54,7 @@ public class ReimbService {
         // TODO add log
 
         List<ReimbursementsResponse> result = new ArrayList<>();
-        List<Reimbursements> reimbs = reimbDAO.getReimbByStatus(status);
+        List<Reimbursements> reimbs = reimbDAO.getReimbByStatus(status_id);
 
         for (Reimbursements reimbursements : reimbs) {
             result.add(new ReimbursementsResponse(reimbs));
@@ -64,12 +64,12 @@ public class ReimbService {
 
     }
 
-    public List<ReimbursementsResponse> getReimbByType_ (String type_) {
+    public List<ReimbursementsResponse> getReimbByType_id (String type_id) {
 
 
-        if (type_ == null || (!type_.toUpperCase().trim().equals("LODGING")
-                && !type_.toUpperCase().trim().equals("TRAVEL")
-                && !type_.toUpperCase().trim().equals("FOOD"))) {
+        if (type_id == null || (!type_id.toUpperCase().trim().equals("LODGING")
+                && !type_id.toUpperCase().trim().equals("TRAVEL")
+                && !type_id.toUpperCase().trim().equals("FOOD"))) {
 
 
             throw new InvalidRequestException("Type must be 'Lodging', 'Travel', or 'Food' ");
@@ -77,7 +77,7 @@ public class ReimbService {
         }
 
         List<ReimbursementsResponse> result = new ArrayList<>();
-        List<Reimbursements> reimbs = reimbDAO.getReimbByType(type_);
+        List<Reimbursements> reimbs = reimbDAO.getReimbByType(type_id);
 
         for (Reimbursements reimbursements : reimbs) {
             result.add(new ReimbursementsResponse(reimbs));
@@ -101,7 +101,7 @@ public class ReimbService {
 
         double newAmount = updateReimb.extractEntity().getAmount();
         String newDescription = updateReimb.extractEntity().getDescription();
-        String newType = updateReimb.extractEntity().getType_();
+        String newType = updateReimb.extractEntity().getType_id();
 
         System.out.println(newAmount);
 
