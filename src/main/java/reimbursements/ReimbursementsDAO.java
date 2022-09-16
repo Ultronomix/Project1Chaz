@@ -34,28 +34,27 @@ public class ReimbursementsDAO {
             "JOIN project1.ers_reimbursement_statuses ers ON er.status_id = ers.status_id " +
             "JOIN project1.ers_reimbursement_types ert ON er.type_id = ert.type_id ";
 
+
     public List<Reimbursements> getAllReimbs() {
 
         logger.info("Attempting to connect to the database at {}", LocalDateTime.now());
-
 
         List<Reimbursements> allReimbs = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             Statement stmt = conn.createStatement();
-            ResultSet rs = ((java.sql.Statement) stmt).executeQuery(baseSelect);
+            ResultSet rs = stmt.executeQuery(baseSelect);
 
             allReimbs = mapResultSet(rs);
-
-            logger.info("Attempting to connect to the database at {}", LocalDateTime.now());
-
+            logger.info("Successful database connection at {}", LocalDateTime.now());
 
         } catch (SQLException e) {
             System.err.println("Something went wrong when connection to database.");
             e.printStackTrace();
-            throw new DataSourceException(e);
+            logger.fatal("Unsuccessful database connection at {}, error message: {}", LocalDateTime.now(), e.getMessage());
         }
+
         return allReimbs;
     }
 
@@ -257,7 +256,7 @@ public class ReimbursementsDAO {
               pstmt.setString(4, newReimbursements.getAuthor_id());
             pstmt.setString(5, newReimbursements.getType_id());
 
-
+            pstmt.executeUpdate();
 
             ResultSet rs = pstmt.getGeneratedKeys();
             rs.next();
@@ -281,8 +280,8 @@ public class ReimbursementsDAO {
             Reimbursements reimbursement = new Reimbursements();
             reimbursement.setReimb_id(rs.getString("reimb_id"));
             reimbursement.setAmount(rs.getInt("amount"));
-            reimbursement.setSubmitted(rs.getString("submitted"));
-            reimbursement.setResolved(rs.getString("resolved"));
+            reimbursement.setSubmitted(LocalDateTime.parse(rs.getString("submitted")));
+            reimbursement.setResolved(LocalDateTime.parse(rs.getString("resolved")));
             reimbursement.setDescription(rs.getString("description"));
             reimbursement.setPayment_id(rs.getString("payment_id"));
             reimbursement.setAuthor_id(rs.getString("author_id"));

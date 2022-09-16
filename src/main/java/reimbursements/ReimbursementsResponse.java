@@ -8,12 +8,12 @@ public class ReimbursementsResponse implements Serializable {
 
     private String reimb_id;
     private float amount;
-    private String submitted;
-    private String resolved;
+    private LocalDateTime submitted;
+    private LocalDateTime resolved;
     private String description;
     private String payment_id;
-    private LocalDateTime author_id; // ---> user_id
-    private LocalDateTime resolved_id; // ---> user_id
+    private String author_id; // ---> user_id
+    private String resolved_id; // ---> user_id
     private String status_id; // ---> reimb statuses
     private String type_id; // ---> reimb types
 
@@ -24,8 +24,8 @@ public class ReimbursementsResponse implements Serializable {
         this.resolved = subject.getResolved();
         this.description = subject.getDescription();
         this.payment_id = subject.getPayment_id();
-        this.author_id = LocalDateTime.parse(subject.getAuthor_id());
-        this.resolved_id = LocalDateTime.parse(subject.getResolved_id());
+        this.author_id = subject.getAuthor_id();
+        this.resolved_id = subject.getResolved_id();
         this.status_id = subject.getStatus_id();
         this.type_id = subject.getType_id();
 

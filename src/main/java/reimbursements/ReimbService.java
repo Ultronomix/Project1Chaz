@@ -1,6 +1,14 @@
 package reimbursements;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import common.ResourceCreationResponse;
+import common.connection.ConnectionFactory;
+import common.exceptions.DataSourceException;
 import common.exceptions.InvalidRequestException;
 import common.exceptions.ResourceNotFoundException;
 import common.exceptions.ResourcePersistenceException;
@@ -21,14 +29,14 @@ public class ReimbService {
         this.reimbDAO = reimbDAO;
     }
 
-    public List<ReimbursementsResponse> getAllReimbursements() {
-
+    public List<ReimbursementsResponse> getAllReimbs() {
 
         return reimbDAO.getAllReimbs().stream()
                 .map(ReimbursementsResponse::new)
                 .collect(Collectors.toList());
-
     }
+
+
 
     public ReimbursementsResponse getReimbByReimb_id(String reimb_id) {
 
@@ -134,9 +142,6 @@ public class ReimbService {
             throw new InvalidRequestException("Provided request payload was null.");
         }
 
-        if (newReimb.getAuthor_id() == null) {
-            throw new InvalidRequestException("Provided request payload was null.");
-        }
 
         if (newReimb.getType_id() == null) {
             throw new InvalidRequestException("Provided request payload was null.");
