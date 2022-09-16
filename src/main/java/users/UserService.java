@@ -80,7 +80,7 @@ public class UserService {
             throw new InvalidRequestException("Provided request payload was null.");
         }
 
-        if (newUser.getuserId() == null || newUser.getuserId().length() <= 0){
+        if (newUser.getUserId() == null || newUser.getUserId().length() <= 0){
             throw new InvalidRequestException(("A non empty user ID must be provided"));
         }
 

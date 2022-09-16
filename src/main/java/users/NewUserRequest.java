@@ -18,12 +18,12 @@ public class NewUserRequest implements Request<User> {
     private Role role;
 
 
-    public String getuserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setuserId(String userId) {
-        userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -106,7 +106,9 @@ public class NewUserRequest implements Request<User> {
         extractedEntity.setGivenName(this.givenName);
         extractedEntity.setSurname(this.surname);
         extractedEntity.setIsActive((this.isActive));
-        extractedEntity.setRole(String.valueOf(this.role));
+        extractedEntity.setRole((this.role));
         return extractedEntity;
     }
-}
+
+
+    }

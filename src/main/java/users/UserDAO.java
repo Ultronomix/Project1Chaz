@@ -174,9 +174,8 @@ public class UserDAO {
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, givenName);
-            pstmt.setInt(2, Integer.parseInt(userId));
-
-            int rs = pstmt.executeUpdate();
+            pstmt.setString(2, userId);
+            ResultSet rs = pstmt.executeQuery();
 
             return "User first name updated to " + givenName + ", Rows affected = " + rs;
 
@@ -195,9 +194,8 @@ public class UserDAO {
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, surname);
-            pstmt.setInt(2, Integer.parseInt(user_id));
-
-            int rs = pstmt.executeUpdate();
+            pstmt.setString(2, user_id);
+            ResultSet rs = pstmt.executeQuery();
 
             return "User last name updated to " + surname + ", Rows affected = " + rs;
 
@@ -207,23 +205,25 @@ public class UserDAO {
     }
 
     public String updateUserEmail(String email, String user_id) {
-        String sql = baseSelect + " WHERE eu.email = ? ";
+        String sql = " UPDATE project1.ers_users " +
+                " SET email = ? " +
+                " WHERE user_id = ? ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, email);
-            pstmt.setInt(2, Integer.parseInt(user_id));
+            pstmt.setString(2, user_id);
 
-            int rs = pstmt.executeUpdate();
+            ResultSet rs = pstmt.executeQuery();
 
             return "User email updated to " + email + ", Rows affected = " + rs;
 
         } catch (SQLException e) {
             throw new DataSourceException(e);
         }
-    }
+    }  // todo must finish update methods for all columns
 
 
     public void log(String level, String message) {
@@ -246,12 +246,12 @@ public class UserDAO {
 
             PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"user_id"});
             pstmt.setString(1, user.getUserId());
-            pstmt.setString(5, user.getUsername());
-            pstmt.setString(2, user.getGivenName());
-            pstmt.setString(3, user.getSurname());
-            pstmt.setString(4, user.getEmail());
+            pstmt.setString(2, user.getUsername());
+            pstmt.setString(3, user.getGivenName());
+            pstmt.setString(4, user.getSurname());
+            pstmt.setString(5, user.getEmail());
             pstmt.setString(6, user.getPassword());
-            pstmt.setString(7, String.valueOf(user.getIsActive()));
+            pstmt.setBoolean(7, user.getIsActive());
             pstmt.setString(8, user.getRole());
 
             pstmt.executeUpdate();
@@ -283,8 +283,8 @@ public class UserDAO {
 
 
         String sql = "UPDATE project1.ers_users " +
-                " SET username = ?, email = ?, given_name = ?, surname = ?, \"password\" = ?, is_active = ?, role_id = ? " +
-                " WHERE user_id = ? ";
+                " SET user_id = ?, username = ?, email = ?, given_name = ?, surname = ?, \"password\" = ?, role_id = ? " +
+                " WHERE project1.ers_users.role_id = ? ";
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -295,8 +295,10 @@ public class UserDAO {
             pstmt.setString(4, user.getGivenName());
             pstmt.setString(5, user.getSurname());
             pstmt.setString(6, user.getPassword());
-            pstmt.setBoolean(7, user.getIsActive());
+            pstmt.setString(7, user.getRole());
             pstmt.setString(8, user.getRole());
+
+            ResultSet rs = pstmt.getGeneratedKeys();
 
 
             int rowsUpdated = pstmt.executeUpdate();

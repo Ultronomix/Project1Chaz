@@ -18,7 +18,7 @@ public class User {
         super();
     }
 
-    public User(String userId, String givenName, String surname, String email, String username, String password, boolean isActive) {
+    public User(String userId, String givenName, String surname, String email, String username, String password, boolean isActive, String role) {
         this.userId = userId;
         this.givenName = givenName;
         this.surname = surname;
@@ -26,6 +26,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isActive = isActive;
+        this.role = role;
 
 
     }
@@ -118,5 +119,9 @@ public class User {
                 ", isActive='" + isActive + '\'' +
                 ", role_=" + role +
                 '}';
+    }
+
+    public void setRole(Role role) {
+
     }
 }
