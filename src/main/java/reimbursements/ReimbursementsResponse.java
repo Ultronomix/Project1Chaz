@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ReimbursementsResponse implements Serializable {
 
     private String reimb_id;
-    private double amount;
+    private float amount;
     private String submitted;
     private String resolved;
     private String description;
@@ -19,7 +19,7 @@ public class ReimbursementsResponse implements Serializable {
 
     public ReimbursementsResponse (Reimbursements subject) {
         this.reimb_id = subject.getReimb_id();
-        this.amount = subject.getAmount();
+        this.amount =  subject.getAmount();
         this.submitted = subject.getSubmitted();
         this.resolved = subject.getResolved();
         this.description = subject.getDescription();
@@ -33,8 +33,8 @@ public class ReimbursementsResponse implements Serializable {
 
     }
 
-    public ReimbursementsResponse(List<Reimbursements> reimbursements) {
-    }
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -38,13 +38,16 @@ public class ShinobiApp {
 
         UserDAO userDAO = new UserDAO();
         ReimbursementsDAO reimbursementsDAO = new ReimbursementsDAO();
+
         AuthService authService = new AuthService(userDAO);
         UserService userService = new UserService(userDAO);
         ReimbService reimbService = new ReimbService(reimbursementsDAO);
+
         ObjectMapper jsonMapper = new ObjectMapper();
+
         UserServlet userServlet = new UserServlet(userService, jsonMapper);
         AuthServlet authServlet = new AuthServlet(authService, jsonMapper);
-        ReimbServlet reimbServlet = new ReimbServlet(reimbService);
+        ReimbServlet reimbServlet = new ReimbServlet(reimbService, jsonMapper);
 
 
         final String rootContext = "/shinobi";

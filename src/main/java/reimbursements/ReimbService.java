@@ -1,12 +1,20 @@
 package reimbursements;
-import java.util.ArrayList;
 import java.util.List;
 import common.ResourceCreationResponse;
 import common.exceptions.InvalidRequestException;
 import common.exceptions.ResourceNotFoundException;
 import common.exceptions.ResourcePersistenceException;
 
+import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 public class ReimbService {
+
+    private static Logger logger = LogManager.getLogger(ReimbService.class);
+
     private final ReimbursementsDAO reimbDAO;
 
     public ReimbService(ReimbursementsDAO reimbDAO) {
@@ -16,55 +24,54 @@ public class ReimbService {
     public List<ReimbursementsResponse> getAllReimbursements() {
 
 
-
-        List<ReimbursementsResponse> result = new ArrayList<>();
-        List<Reimbursements> reimbursements = reimbDAO.getAllReimbs();
-
-        for (Reimbursements reimbursement : reimbursements) {
-            result.add(new ReimbursementsResponse(reimbursements));
-        }
-
-        return result;
+        return reimbDAO.getAllReimbs().stream()
+                .map(ReimbursementsResponse::new)
+                .collect(Collectors.toList());
 
     }
 
-    public ReimbursementsResponse getReimbByReimb_id (String reimb_id) {
+    public ReimbursementsResponse getReimbByReimb_id(String reimb_id) {
 
 
         if (reimb_id == null || reimb_id.trim().length() <= 0) {
 
             throw new InvalidRequestException("A user's id must be provided");
         }
+        try {
+            return reimbDAO.getReimbByReimbId(reimb_id)
+                    .map(ReimbursementsResponse::new)
+                    .orElseThrow(ResourceNotFoundException::new);
 
-        return reimbDAO.getReimbByReimbId(reimb_id).map(ReimbursementsResponse::new).orElseThrow(ResourceNotFoundException::new);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("an invalid reimbursement id was provided");
+        }
 
 
     }
 
-    public List<ReimbursementsResponse> getReimbByStatus_id (String status_id) {
+    public ReimbursementsResponse getReimbByStatus_id(String status_id) {
 
         // TODO add log
-        if (status_id == null || (!status_id.toUpperCase().trim().equals("APPROVED")
-                && !status_id.toUpperCase().trim().equals("PENDING")
-                && !status_id.toUpperCase().trim().equals("DENIED"))) {
-            // TODO add log
-            throw new InvalidRequestException("Status cannot be empty. Enter 'Approved', 'Pending', " +
-                    " or 'Denied'");
-        }
-        // TODO add log
-
-        List<ReimbursementsResponse> result = new ArrayList<>();
-        List<Reimbursements> reimbs = reimbDAO.getReimbByStatus(status_id);
-
-        for (Reimbursements reimbursements : reimbs) {
-            result.add(new ReimbursementsResponse(reimbs));
+        if (status_id == null || status_id.length() <= 0) {
+            throw new InvalidRequestException("a non empty id must be provided");
         }
 
-        return result;
+        try {
+            return reimbDAO.getReimbByStatus(status_id)
+                    .map(ReimbursementsResponse::new)
+                    .orElseThrow(ResourceNotFoundException::new);
+
+
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("an invalid status id was provided");
+
+
+        }
+
 
     }
 
-    public List<ReimbursementsResponse> getReimbByType_id (String type_id) {
+    public ReimbursementsResponse getReimbByType_id(String type_id) {
 
 
         if (type_id == null || (!type_id.toUpperCase().trim().equals("LODGING")
@@ -76,70 +83,70 @@ public class ReimbService {
 
         }
 
-        List<ReimbursementsResponse> result = new ArrayList<>();
-        List<Reimbursements> reimbs = reimbDAO.getReimbByType(type_id);
+        try {
+            return reimbDAO.getReimbByType(type_id)
+                    .map(ReimbursementsResponse::new)
+                    .orElseThrow(ResourceNotFoundException::new);
 
-        for (Reimbursements reimbursements : reimbs) {
-            result.add(new ReimbursementsResponse(reimbs));
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("an invalid type id was provided");
+
         }
 
-        return result;
 
     }
-    public ResourceCreationResponse updateReimb (UpdateReimbursementRequest updateReimb, String reimb_id) {
+
+    public void updateReimb(UpdateReimbursementRequest updateReimb) {
 
 
-        if (updateReimb == null) {
+        Reimbursements reimbToUpdate = reimbDAO.getReimbByReimbId(updateReimb.getReimb_id())
+                .orElseThrow(ResourceNotFoundException::new);
 
-            throw new InvalidRequestException("Provide request payload");
-        }
-
-        if (!reimbDAO.isPending(reimb_id)) {
-            // TODO add log
-            throw new ResourcePersistenceException("Request is not pending.");
-        }
-
-        double newAmount = updateReimb.extractEntity().getAmount();
-        String newDescription = updateReimb.extractEntity().getDescription();
-        String newType = updateReimb.extractEntity().getType_id();
-
-        System.out.println(newAmount);
-
-        if (newAmount > 0) {
-            if (newAmount > 9999.99) {
-                // TODO add log
-                throw new InvalidRequestException("Amount must be below 10,000.");
-            }
-
-            reimbDAO.updateUserAmount(reimb_id, newAmount);
+        if (updateReimb.getAmount() != 0) {
+            reimbToUpdate.setAmount(updateReimb.getAmount());
 
         }
-        if (newDescription != null) {
-
-            reimbDAO.updateUserDescription(reimb_id, newDescription);
+        if (updateReimb.getDescription() != null) {
+            reimbToUpdate.setDescription(updateReimb.getDescription());
 
         }
-        if (newType != null) {
-            if (!newType.toUpperCase().equals("LODGING") && !newType.toUpperCase().equals("TRAVEL")
-                    && !newType.toUpperCase().equals("FOOD")) {
-                // TODO add log
-                throw new InvalidRequestException("Type must be 'Lodging', 'Travel', 'Food' " +
-                        "or 'Other'");
-            }
-            if (newType.toUpperCase().equals("LODGING")) {
-                newType = "200001";
-            }
-            if (newType.toUpperCase().equals("TRAVEL")) {
-                newType = "200002";
-            }
-            if (newType.toUpperCase().equals("FOOD")) {
-                newType = "200003";
 
-            }
+        if (updateReimb.getType_id() != null) {
+            reimbToUpdate.setType_id(updateReimb.getType_id());
 
-            reimbDAO.updateUserType(reimb_id, newType);
         }
-
-        return new ResourceCreationResponse("Updated requests") ;
+        reimbDAO.updateReimb(reimbToUpdate);
     }
+
+    public ResourceCreationResponse create(NewReimbursementRequest newReimb) {
+
+        if (newReimb == null) {
+            throw new InvalidRequestException("Provided request payload was null.");
+
+        }
+
+        if (newReimb.getAmount() == 0) {
+            throw new InvalidRequestException("Provided request payload was null.");
+
+        }
+
+        if (newReimb.getDescription() == null) {
+            throw new InvalidRequestException("Provided request payload was null.");
+        }
+
+        if (newReimb.getAuthor_id() == null) {
+            throw new InvalidRequestException("Provided request payload was null.");
+        }
+
+        if (newReimb.getType_id() == null) {
+            throw new InvalidRequestException("Provided request payload was null.");
+
+        }
+
+
+        Reimbursements reimbToPersist = newReimb.extractEntity();
+        String newReimbId = reimbDAO.register(reimbToPersist);
+        return new ResourceCreationResponse(newReimbId);
+    }
+
 }

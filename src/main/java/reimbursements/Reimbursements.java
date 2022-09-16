@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Reimbursements {
     private String reimb_id;
-    private double amount;
+    private float amount;
 
     private String submitted;
 
@@ -27,11 +27,11 @@ public class Reimbursements {
         this.reimb_id = reimb_id;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -122,7 +122,7 @@ public class Reimbursements {
                 ", description='" + description + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
-                ", resolver_id='" + resolved_id + '\'' +
+                ", resolved_id='" + resolved_id + '\'' +
                 ", status_id='" + status_id + '\'' +
                 ", type_id='" + type_id + '\'' +
                 '}';
