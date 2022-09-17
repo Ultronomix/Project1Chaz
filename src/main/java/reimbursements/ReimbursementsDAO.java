@@ -136,12 +136,12 @@ public class ReimbursementsDAO {
     }
 
     public void updateReimb(Reimbursements reimbursements) {
+        logger.info("Attempting to update reimbursement info at {}", LocalDateTime.now());
 
 
         String sql = "UPDATE project1.ers_reimbursements " +
                 "SET amount = ?, description = ?, type_id = ? " +
                 "WHERE reimb_id = ? ";
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -156,10 +156,8 @@ public class ReimbursementsDAO {
                 System.out.println("Sorry we didnt actually update anything.");
             }
 
-
-
-
         } catch (SQLException e) {
+            logger.warn("Unable to persist updated reimbursement at {}", LocalDateTime.now());
 
             throw new DataSourceException(e);
         }
@@ -244,17 +242,18 @@ public class ReimbursementsDAO {
     }
     public String register(Reimbursements newReimbursements) {
 
-        String baseSelect = " INSERT INTO project1.ers_reimbursements (reimb_id, amount, description, status_id, author_id, type_id) " +
-                " VALUES (?, ?, ?, 99913, ?, ?) ";
+        String baseSelect = " INSERT INTO project1.ers_reimbursements (reimb_id, amount, description,  author_id, status_id, type_id) " +
+                " VALUES (?, ?, ?, ?, 99913, ?) ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             PreparedStatement pstmt = conn.prepareStatement(baseSelect);
             pstmt.setString(1, newReimbursements.getReimb_id());
             pstmt.setFloat(2, newReimbursements.getAmount());
-              pstmt.setString(3, newReimbursements.getDescription());
-              pstmt.setString(4, newReimbursements.getAuthor_id());
+            pstmt.setString(3, newReimbursements.getAuthor_id());
+              pstmt.setString(4, newReimbursements.getDescription());
             pstmt.setString(5, newReimbursements.getType_id());
+
 
             pstmt.executeUpdate();
 
@@ -277,11 +276,11 @@ public class ReimbursementsDAO {
         List<Reimbursements> reimbursements = new ArrayList<>();
 
         while (rs.next()) {
+            logger.info("Attempting to map the result set of reimbursement info at {}", LocalDateTime.now());
+
             Reimbursements reimbursement = new Reimbursements();
             reimbursement.setReimb_id(rs.getString("reimb_id"));
-            reimbursement.setAmount(rs.getInt("amount"));
-            reimbursement.setSubmitted(LocalDateTime.parse(rs.getString("submitted")));
-            reimbursement.setResolved(LocalDateTime.parse(rs.getString("resolved")));
+            reimbursement.setAmount(rs.getFloat("amount"));
             reimbursement.setDescription(rs.getString("description"));
             reimbursement.setPayment_id(rs.getString("payment_id"));
             reimbursement.setAuthor_id(rs.getString("author_id"));
@@ -289,6 +288,8 @@ public class ReimbursementsDAO {
             reimbursement.setStatus_id(rs.getString("status_id"));
             reimbursement.setType_id(rs.getString("type_id"));
 
+
+            reimbursements.add(reimbursement);
         }
 
         return reimbursements;

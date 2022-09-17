@@ -198,9 +198,10 @@ public class ReimbServlet extends HttpServlet {
         }
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
+        String userIdToSearchFor= req.getParameter("user_id");
+        String reimbIdToSearchFor = req.getParameter("reimb_id");
 
-
-        if ((!requester.getRole().equals("HOKAGE(DIRECTOR)"))) {
+        if ((!requester.getRole().equals("ADVISORS(FINANCE MANAGERS)"))) {
             logger.warn("Requester with invalid permissions attempted to update reimbursements at {}", LocalDateTime.now());
 
             resp.setStatus(403); // Forbidden
@@ -211,27 +212,35 @@ public class ReimbServlet extends HttpServlet {
 
         try {
 
-            UpdateReimbursementRequest requestPayload = jsonMapper.readValue(req.getInputStream(), UpdateReimbursementRequest.class);
-            reimbService.updateReimb(requestPayload);
-            logger.info("Reimbursement successfully updated at {}", LocalDateTime.now());
-            resp.setStatus(204);
 
+
+            UpdateReimbursementRequest requestPayload = jsonMapper.readValue(req.getInputStream(), UpdateReimbursementRequest.class);
+
+                reimbService.updateReimb(requestPayload);
+                logger.info("Reimbursement successfully updated at {}", LocalDateTime.now());
+                resp.setStatus(204);
 
          } catch (InvalidRequestException | JsonMappingException e) {
 
         resp.setStatus(400);
         resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(400, e.getMessage())));
-    } catch (AuthenticationException e) {
+            logger.warn("Unable to persist updated reimbursement status at {}, error message: {}", LocalDateTime.now(), e.getMessage());
+
+        } catch (AuthenticationException e) {
 
         resp.setStatus(409);
         resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(409, e.getMessage())));
+            logger.warn("Unable to persist updated reimbursement status at {}, error message: {}", LocalDateTime.now(), e.getMessage());
+
     } catch (DataSourceException e) {
 
         resp.setStatus(500);
         resp.getWriter().write(jsonMapper.writeValueAsString(new ErrorResponse(500, e.getMessage())));
-    }
+            logger.warn("Unable to persist updated reimbursement status at {}, error message: {}", LocalDateTime.now(), e.getMessage());
+
+        }
 
 
-        resp.getWriter().write("still working on reimb update");
+
     }
 }
