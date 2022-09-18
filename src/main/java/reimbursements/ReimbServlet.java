@@ -61,7 +61,7 @@ public class ReimbServlet extends HttpServlet {
         String type_idToSearchFor = req.getParameter("type_id");
 
 
-        if ((!requester.getRole().equals("HOKAGE(DIRECTOR)") && !requester.getRole().equals("ADVISORS(FINANCE MANAGERS)")) && !requester.getRole().equals("JONIN(EMPLOYEES)")) {
+        if ((!requester.getRole().equals("ADVISORS(FINANCE MANAGERS)"))) {
             logger.warn("Requester with invalid permissions attempted to view information at {}, {}", LocalDateTime.now(), requester.getUsername());
 
             resp.setStatus(403); // Forbidden
@@ -114,7 +114,6 @@ public class ReimbServlet extends HttpServlet {
         }
 
 
-        resp.getWriter().write("reimb working");
     }
 
     @Override
@@ -198,8 +197,7 @@ public class ReimbServlet extends HttpServlet {
         }
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
-        String userIdToSearchFor= req.getParameter("user_id");
-        String reimbIdToSearchFor = req.getParameter("reimb_id");
+
 
         if ((!requester.getRole().equals("ADVISORS(FINANCE MANAGERS)"))) {
             logger.warn("Requester with invalid permissions attempted to update reimbursements at {}", LocalDateTime.now());
@@ -212,9 +210,8 @@ public class ReimbServlet extends HttpServlet {
 
         try {
 
-
-
             UpdateReimbursementRequest requestPayload = jsonMapper.readValue(req.getInputStream(), UpdateReimbursementRequest.class);
+
 
                 reimbService.updateReimb(requestPayload);
                 logger.info("Reimbursement successfully updated at {}", LocalDateTime.now());

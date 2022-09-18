@@ -241,8 +241,9 @@ public class ReimbursementsDAO {
         }
     }
     public String register(Reimbursements newReimbursements) {
+        logger.info("Attempting to persist new reimbursement at {}", LocalDateTime.now());
 
-        String baseSelect = " INSERT INTO project1.ers_reimbursements (reimb_id, amount, description,  author_id, status_id, type_id) " +
+        String baseSelect = " INSERT INTO project1.ers_reimbursements (reimb_id, amount, description, author_id, status_id, type_id) " +
                 " VALUES (?, ?, ?, ?, 99913, ?) ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -251,7 +252,7 @@ public class ReimbursementsDAO {
             pstmt.setString(1, newReimbursements.getReimb_id());
             pstmt.setFloat(2, newReimbursements.getAmount());
             pstmt.setString(3, newReimbursements.getAuthor_id());
-              pstmt.setString(4, newReimbursements.getDescription());
+            pstmt.setString(4, newReimbursements.getDescription());
             pstmt.setString(5, newReimbursements.getType_id());
 
 
