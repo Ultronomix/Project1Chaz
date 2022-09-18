@@ -57,7 +57,7 @@ public class ReimbServlet extends HttpServlet {
         UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
         String reimb_idToSearchFor = req.getParameter("reimb_id");
-        String status_idToSearchFor = req.getParameter("status_id");
+
 
 
 
@@ -73,20 +73,16 @@ public class ReimbServlet extends HttpServlet {
         try {
             logger.info("Iterating through list of reimbursements by id at {}", LocalDateTime.now());
 
+            if (reimb_idToSearchFor == null) {
+                List<ReimbursementsResponse> allReimbs = reimbService.getAllReimbs();
+                resp.getWriter().write(jsonMapper.writeValueAsString(allReimbs));
 
-            if (reimb_idToSearchFor != null) {
-
-                ReimbursementsResponse foundRequest = reimbService.getReimbByReimb_id(reimb_idToSearchFor);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundRequest));
                 //! resp.getWriter().write("\nGet reimburse request by id");
-            }
-            if (status_idToSearchFor != null) {
+             } else {
+                ReimbursementsResponse foundReimb = reimbService.getReimbByReimb_id(reimb_idToSearchFor);
+                resp.getWriter().write(jsonMapper.writeValueAsString(foundReimb));
 
-                ReimbursementsResponse foundStatus_id = reimbService.getReimbByStatus_id(status_idToSearchFor);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus_id));
-                //! resp.getWriter().write("\nGet reimburse by status");
             }
-
 
         } catch (InvalidRequestException | JsonMappingException e) {
 

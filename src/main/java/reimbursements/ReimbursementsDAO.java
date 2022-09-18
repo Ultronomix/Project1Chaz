@@ -111,8 +111,8 @@ public class ReimbursementsDAO {
     public String register(Reimbursements newReimbursements) {
         logger.info("Attempting to persist new reimbursement at {}", LocalDateTime.now());
 
-        String baseSelect = " INSERT INTO project1.ers_reimbursements (reimb_id, amount, description, author_id, status_id, type_id) " +
-                " VALUES (?, ?, ?, ?, 99913, ?) ";
+        String baseSelect = " INSERT INTO project1.ers_reimbursements (reimb_id, amount, author_id, description, status_id, type_id) " +
+                " VALUES (?, ?, ?, ?, 99913,?) ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -143,9 +143,9 @@ public class ReimbursementsDAO {
         return newReimbursements.getReimb_id();
     }
 
-    private ArrayList<Reimbursements> mapResultSet(ResultSet rs) throws SQLException {
+    private List<Reimbursements> mapResultSet(ResultSet rs) throws SQLException {
 
-        ArrayList<Reimbursements> reimbursements = new ArrayList<>();
+        List<Reimbursements> reimbursements = new ArrayList<>();
 
         while (rs.next()) {
             logger.info("Attempting to map the result set of reimbursement info at {}", LocalDateTime.now());
