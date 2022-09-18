@@ -23,7 +23,7 @@ public class ReimbService {
         this.reimbDAO = reimbDAO;
     }
 
-    public List<ReimbursementsResponse> getAllReimb() {
+    public List<ReimbursementsResponse> getAllReimbs() {
 
         return reimbDAO.getAllReimbs().stream()
                 .map(ReimbursementsResponse::new)
@@ -73,30 +73,7 @@ public class ReimbService {
 
     }
 
-    public ReimbursementsResponse getReimbByType_id(String type_id) {
 
-
-        if (type_id == null || (!type_id.toUpperCase().trim().equals("LODGING")
-                && !type_id.toUpperCase().trim().equals("TRAVEL")
-                && !type_id.toUpperCase().trim().equals("FOOD"))) {
-
-
-            throw new InvalidRequestException("Type must be 'Lodging', 'Travel', or 'Food' ");
-
-        }
-
-        try {
-            return reimbDAO.getReimbByType(type_id)
-                    .map(ReimbursementsResponse::new)
-                    .orElseThrow(ResourceNotFoundException::new);
-
-        } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("an invalid type id was provided");
-
-        }
-
-
-    }
 
     public void updateReimb(UpdateReimbursementRequest updateReimb) {
 

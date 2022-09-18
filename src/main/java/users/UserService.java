@@ -4,11 +4,16 @@ import common.ResourceCreationResponse;
 import common.exceptions.InvalidRequestException;
 import common.exceptions.ResourceNotFoundException;
 import common.exceptions.ResourcePersistenceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import reimbursements.ReimbService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserService {
+
+    private static Logger logger = LogManager.getLogger(ReimbService.class);
 
     private final UserDAO userDAO;
 
@@ -25,6 +30,8 @@ public class UserService {
 
 
     public UserResponse getUserByUserId(String userId) {
+
+        logger.info("attempting to get users by id");
 
         if (userId == null || userId.length() == 0) {
             throw new InvalidRequestException("A non-empty user_id must be provided!");

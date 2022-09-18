@@ -58,7 +58,7 @@ public class ReimbServlet extends HttpServlet {
 
         String reimb_idToSearchFor = req.getParameter("reimb_id");
         String status_idToSearchFor = req.getParameter("status_id");
-        String type_idToSearchFor = req.getParameter("type_id");
+
 
 
         if ((!requester.getRole().equals("ADVISORS(FINANCE MANAGERS)"))) {
@@ -86,13 +86,8 @@ public class ReimbServlet extends HttpServlet {
                 resp.getWriter().write(jsonMapper.writeValueAsString(foundStatus_id));
                 //! resp.getWriter().write("\nGet reimburse by status");
             }
-            if (type_idToSearchFor != null) {
-                // TODO add log
-                ReimbursementsResponse foundType_id = reimbService.getReimbByType_id(type_idToSearchFor);
-                resp.getWriter().write(jsonMapper.writeValueAsString(foundType_id));
-                //! resp.getWriter().write("\nGet reimburse by type");
 
-        }
+
         } catch (InvalidRequestException | JsonMappingException e) {
 
             resp.setStatus(400);
