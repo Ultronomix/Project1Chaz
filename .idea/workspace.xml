@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/reimbursements/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/reimbursements/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/reimbursements/ReimbServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/Reimbursements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/Reimbursements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbursementsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbursementsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/UpdateUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UpdateUserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/users/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/users/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,22 +83,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest.test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="authentication.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="authentication" />
-      <option name="MAIN_CLASS_NAME" value="authentication.AuthServiceTest" />
-      <option name="METHOD_NAME" value="test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project1" />
       <extension name="coverage">
@@ -132,6 +115,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ReimbServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="reimbursements.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="reimbursements" />
+      <option name="MAIN_CLASS_NAME" value="reimbursements.ReimbServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project1" />
       <extension name="coverage">
@@ -150,10 +148,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.ShinobiApp" />
+        <item itemvalue="JUnit.ReimbServiceTest" />
         <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="JUnit.AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" />
         <item itemvalue="JUnit.AuthServiceTest.test_authenticate_throwsInvalidRequestException_givenInvalidCredentials" />
-        <item itemvalue="JUnit.AuthServiceTest.test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials" />
       </list>
     </recent_temporary>
   </component>
@@ -181,7 +179,7 @@
       <workItem from="1663168214682" duration="29213000" />
       <workItem from="1663217596230" duration="4099000" />
       <workItem from="1663250858802" duration="78811000" />
-      <workItem from="1663528981350" duration="21241000" />
+      <workItem from="1663528981350" duration="26762000" />
     </task>
     <task id="LOCAL-00001" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <created>1662494617417</created>
@@ -255,6 +253,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/reimbursements/ReimbService.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

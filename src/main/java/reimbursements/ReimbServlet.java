@@ -126,7 +126,7 @@ public class ReimbServlet extends HttpServlet {
 
     UserResponse requester = (UserResponse) reimbSession.getAttribute("loggedInUser");
 
-        if (!requester.getRole().equals("JONIN(EMPLOYEES)") && !requester.getRole().equals("ADVISORS(FINANCE MANAGERS"))  {
+        if (!requester.getRole().equals("JONIN(EMPLOYEES)") && !requester.getRole().equals("ADVISORS(FINANCE MANAGERS)"))  {
         logger.warn("Requester with invalid permissions attempted to register at {}", LocalDateTime.now());
 
         resp.setStatus(403);

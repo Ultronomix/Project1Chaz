@@ -226,17 +226,7 @@ public class UserDAO {
     }  // todo must finish update methods for all columns
 
 
-    public void log(String level, String message) {
-        try {
-            File logFile = new File("logs/app.log");
-            logFile.createNewFile();
-            BufferedWriter logWriter = new BufferedWriter(new FileWriter(logFile));
-            logWriter.write(String.format("[%s] at %s logged: [%s] %s\n", Thread.currentThread().getName(), LocalDate.now(), level.toUpperCase(), message));
-            logWriter.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public String register(User user) {
 
         String sql = " INSERT INTO project1.ers_users (user_id, username, given_name, surname, email, \"password\", is_active, role_id) " +
@@ -261,10 +251,9 @@ public class UserDAO {
             user.setUserId(rs.getString("user_id"));
 
         } catch (SQLException e) {
-           log("ERROR", e.getMessage());
+
         }
 
-        log("INFO", "Successfully persisted new user with id: " + user.getUserId());
 
         return user.getUserId();
 
@@ -311,6 +300,9 @@ public class UserDAO {
 
 
         }
+
+    public void findUserByUsernameAndPassword(String role_) {
     }
+}
 
 

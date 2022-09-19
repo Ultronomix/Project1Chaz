@@ -14,6 +14,10 @@ public class UpdateUserRequest implements Request<User> {
 
     private boolean isActive;
 
+    private String Role;
+
+    public UpdateUserRequest() {
+    }
 
 
     public String getUserId() {
@@ -72,6 +76,14 @@ public class UpdateUserRequest implements Request<User> {
         this.surname = surname;
     }
 
+    public String getRole() {
+        return Role;
+    }
+
+    public void setRole(String role) {
+        Role = role;
+    }
+
     @Override
     public User extractEntity() {
         User extractedEntity = new User();
@@ -81,6 +93,7 @@ public class UpdateUserRequest implements Request<User> {
         extractedEntity.setGivenName(this.givenName);
         extractedEntity.setSurname(this.surname);
         extractedEntity.setIsActive(this.isActive);
+        extractedEntity.setRole(this.Role);
         return extractedEntity;
     }
 
