@@ -6,7 +6,7 @@ import common.connection.ConnectionFactory;
 
 import java.time.LocalDateTime;
 
-import common.exceptions.ResourceNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,11 +22,11 @@ public class ReimbursementsDAO {
     private static Logger logger = LogManager.getLogger(ReimbursementsDAO.class);
 
     private final String baseSelect = "SELECT er.reimb_id, er.amount, er.submitted, er.resolved, " +
-            "er.description, er.payment_id, er.author_id, er.resolved_id, " +
-            "ers.status, ert.type_ " +
+            "er.description, er.author_id, er.resolved_id, " +
+            "ers.status_id, ert.type_id " +
             "FROM project1.ers_reimbursements er " +
-            "JOIN project1.ers_reimbursement_statuses ers ON er.status_id = ers.status_id " +
-            "JOIN project1.ers_reimbursement_types ert ON er.type_id = ert.type_id ";
+            "JOIN project1.ers_reimbursement_statuses ers ON er.status_id = ers.status " +
+            "JOIN project1.ers_reimbursement_types ert ON er.type_id = ert.type_ ";
 
 
     public List<Reimbursements> getAllReimbs() {
@@ -34,6 +34,9 @@ public class ReimbursementsDAO {
         logger.info("Attempting to connect to the database at {}", LocalDateTime.now());
 
         List<Reimbursements> allReimbs = new ArrayList<>();
+
+        String sqlGet = baseSelect + " WHERE er.resolved IS NOT NULL" +
+                " AND er.resolved_id IS NOT NULL";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -57,7 +60,9 @@ public class ReimbursementsDAO {
         logger.info("Attempting to connect to the database at {}", LocalDateTime.now());
 
 
-        String sql = baseSelect + "WHERE er.reimb_id = ? ";
+        String sql = baseSelect + "WHERE er.reimb_id = ? " +
+                " AND er.resolved IS NOT NULL " +
+                " AND er.resolved_id IS NOT NULL ";
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -84,7 +89,9 @@ public class ReimbursementsDAO {
         logger.info("Attempting to connect to the database at {}", LocalDateTime.now());
 
 
-        String sql = baseSelect + " WHERE er.status_id = ? ";
+        String sql = baseSelect + " WHERE er.status_id = ? " +
+                "AND er.resolved IS NOT NULL " +
+                "AND er.resolved_id IS NOT NULL ";
 
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -155,7 +162,7 @@ public class ReimbursementsDAO {
             reimbursement.setReimb_id(rs.getString("reimb_id"));
             reimbursement.setAmount(rs.getFloat("amount"));
             reimbursement.setDescription(rs.getString("description"));
-            reimbursement.setPayment_id(rs.getString("payment_id"));
+
             reimbursement.setAuthor_id(rs.getString("author_id"));
             reimbursement.setResolved_id(rs.getString("resolved_id"));
             reimbursement.setStatus_id(rs.getString("status_id"));

@@ -23,7 +23,7 @@ public class Reimbursements {
 
     private String description;
 
-    private String payment_id;
+
     private String author_id;
     private String resolved_id;
     private String status_id;
@@ -69,13 +69,6 @@ public class Reimbursements {
         this.description = description;
     }
 
-    public String getPayment_id() {
-        return payment_id;
-    }
-
-    public void setPayment_id(String payment_id) {
-        this.payment_id = payment_id;
-    }
 
     public String getAuthor_id() {
         return author_id;
@@ -114,12 +107,12 @@ public class Reimbursements {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursements that = (Reimbursements) o;
-        return Float.compare(that.amount, amount) == 0 && Objects.equals(reimb_id, that.reimb_id) && Objects.equals(submitted, that.submitted) && Objects.equals(resolved, that.resolved) && Objects.equals(description, that.description) && Objects.equals(payment_id, that.payment_id) && Objects.equals(author_id, that.author_id) && Objects.equals(resolved_id, that.resolved_id) && Objects.equals(status_id, that.status_id) && Objects.equals(type_id, that.type_id);
+        return Float.compare(that.amount, amount) == 0 && Objects.equals(reimb_id, that.reimb_id) && Objects.equals(submitted, that.submitted) && Objects.equals(resolved, that.resolved) && Objects.equals(description, that.description) && Objects.equals(author_id, that.author_id) && Objects.equals(resolved_id, that.resolved_id) && Objects.equals(status_id, that.status_id) && Objects.equals(type_id, that.type_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reimb_id, amount, submitted, resolved, description, payment_id, author_id, resolved_id, status_id, type_id);
+        return Objects.hash(reimb_id, amount, submitted, resolved, description, author_id, resolved_id, status_id, type_id);
     }
 
     @Override
@@ -130,7 +123,6 @@ public class Reimbursements {
                 ", submitted=" + submitted +
                 ", resolved=" + resolved +
                 ", description='" + description + '\'' +
-                ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
                 ", resolved_id='" + resolved_id + '\'' +
                 ", status_id='" + status_id + '\'' +
