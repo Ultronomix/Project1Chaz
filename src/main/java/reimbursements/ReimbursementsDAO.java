@@ -6,6 +6,7 @@ import common.connection.ConnectionFactory;
 
 import java.time.LocalDateTime;
 
+import common.exceptions.ResourceNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -78,12 +79,12 @@ public class ReimbursementsDAO {
     }
 
 
-    public Optional<Reimbursements> getReimbByStatus(String status) {
+    public Optional<Reimbursements> getReimbByStatus(String status_id) {
 
         logger.info("Attempting to connect to the database at {}", LocalDateTime.now());
 
 
-        String sql = baseSelect + "WHERE er.status_id = ? ";
+        String sql = baseSelect + " WHERE er.status_id = ? ";
 
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -91,7 +92,7 @@ public class ReimbursementsDAO {
             logger.info("Reimbursement found by status at {}", LocalDateTime.now());
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, status.toUpperCase());
+            pstmt.setString(1, status_id.toUpperCase());
             ResultSet rs = pstmt.executeQuery();
 
             return mapResultSet(rs).stream().findFirst();
@@ -191,6 +192,21 @@ public class ReimbursementsDAO {
         } catch (SQLException e) {
             logger.warn("Unable to persist updated reimbursement at {}", LocalDateTime.now());
 
+            throw new DataSourceException(e);
+        }
+    }
+    public String approveDeny(String reimb_id, String resolved_id, String status_id) {
+        String sql = "UPDATE project1.ers_reimbursements SET (resolved_id, status_id, resolved) = (?,?,?) WHERE reimb_id = ? ";
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, resolved_id);
+            pstmt.setString(2, status_id);
+            pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            pstmt.setString(4, reimb_id);
+            pstmt.executeUpdate();
+            return "reimb changed"; //TODO change
+        } catch (SQLException e) {
+            //TODO log exception
             throw new DataSourceException(e);
         }
     }

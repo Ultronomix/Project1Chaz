@@ -3,6 +3,16 @@ package reimbursements;
 import java.util.Objects;
 import java.time.LocalDateTime;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Objects;
+
+import common.connection.ConnectionFactory;
+import common.exceptions.DataSourceException;
+import common.exceptions.ResourceNotFoundException;
+
 public class Reimbursements {
     private String reimb_id;
     private float amount;
@@ -126,5 +136,22 @@ public class Reimbursements {
                 ", status_id='" + status_id + '\'' +
                 ", type_id='" + type_id + '\'' +
                 '}';
+    }
+
+
+    final public static Status getStatusFromName(String status_name) {
+        String sql = "SELECT status_id, status FROM project1.ers_reimbursement_statuses WHERE status = ?";
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, status_name);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (!rs.next()) {
+
+                throw new ResourceNotFoundException();
+            }
+            return new Status(rs.getString("status_id"), rs.getString("status"));
+        } catch (SQLException e) {
+            throw new DataSourceException(e);
+        }
     }
 }

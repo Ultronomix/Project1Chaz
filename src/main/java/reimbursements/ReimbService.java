@@ -39,40 +39,12 @@ public class ReimbService {
 
             throw new InvalidRequestException("A user's id must be provided");
         }
-        try {
+
             return reimbDAO.getReimbByReimbId(reimb_id)
                     .map(ReimbursementsResponse::new)
                     .orElseThrow(ResourceNotFoundException::new);
 
-        } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("an invalid reimbursement id was provided");
-        }
-
-
     }
-
-    public ReimbursementsResponse getReimbByStatus_id(String status_id) {
-
-        // TODO add log
-        if (status_id == null || status_id.length() <= 0) {
-            throw new InvalidRequestException("a non empty id must be provided");
-        }
-
-        try {
-            return reimbDAO.getReimbByStatus(status_id)
-                    .map(ReimbursementsResponse::new)
-                    .orElseThrow(ResourceNotFoundException::new);
-
-
-        } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("an invalid status id was provided");
-
-
-        }
-
-
-    }
-
 
 
     public void updateReimb(UpdateReimbursementRequest updateReimb) {
@@ -126,5 +98,30 @@ public class ReimbService {
         String newReimbId = reimbDAO.register(reimbToPersist);
         return new ResourceCreationResponse(newReimbId);
     }
+    public ResourceCreationResponse approveDeny(String reimb_id, String resolver_id, String status_id) {
+        if (reimb_id == null || status_id == null || resolver_id == null) {
+            throw new RuntimeException("Provided request payload was null.");
+        }
+        Status reimb_status = Reimbursements.getStatusFromName(status_id);
+        // TODO: validate status
+        String newApproveDeny = reimbDAO.approveDeny(reimb_id, resolver_id, status_id);
+        return new ResourceCreationResponse(newApproveDeny);
+    }
 
+    public ReimbursementsResponse getReimbByStatus(String status_id) {
+
+        if (status_id == null || status_id.length() <= 0) {
+            throw new InvalidRequestException("A non-empty id must be provided!");
+        }
+
+        try {
+
+            return reimbDAO.getReimbByStatus(status_id)
+                    .map(ReimbursementsResponse::new)
+                    .orElseThrow(ResourceNotFoundException::new);
+
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("An invalid UUID string was provided.");
+        }
+    }
 }
