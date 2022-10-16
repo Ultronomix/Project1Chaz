@@ -1,3 +1,13 @@
+README.md/
+
+logs/
+
+*.idea/
+*.class
+*.jar
+
+
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -36,3 +46,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+.idea/workspace.xml
+*.xml
+
+application.properties
