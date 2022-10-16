@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b675a5d-d223-4638-ac19-72aa81156256" name="Changes" comment="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/Reimbursements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/Reimbursements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbursementsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbursementsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbursementsResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/reimbursements/ReimbursementsResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/users/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/reimbursements/ReimbServiceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +44,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/chazc/Project1/Project1/src/test/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/chazc/Desktop/project-2-team-a&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;coverage&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -82,34 +82,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in Project1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="authentication.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="authentication" />
-      <option name="MAIN_CLASS_NAME" value="authentication.AuthServiceTest" />
-      <option name="METHOD_NAME" value="test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthServiceTest.test_authenticate_throwsInvalidRequestException_givenInvalidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="authentication.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="authentication" />
-      <option name="MAIN_CLASS_NAME" value="authentication.AuthServiceTest" />
-      <option name="METHOD_NAME" value="test_authenticate_throwsInvalidRequestException_givenInvalidCredentials" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -129,17 +105,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReimbServiceTest.testGetReimbByStatus" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="users.*" />
+          <option name="PATTERN" value="reimbursements.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="users" />
-      <option name="MAIN_CLASS_NAME" value="users.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="reimbursements" />
+      <option name="MAIN_CLASS_NAME" value="reimbursements.ReimbServiceTest" />
+      <option name="METHOD_NAME" value="testGetReimbByStatus" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReimbServiceTest.testGetReimbByUserId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="reimbursements.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="reimbursements" />
+      <option name="MAIN_CLASS_NAME" value="reimbursements.ReimbServiceTest" />
+      <option name="METHOD_NAME" value="testGetReimbByUserId" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -147,10 +140,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.ShinobiApp" />
+        <item itemvalue="JUnit.ReimbServiceTest.testGetReimbByUserId" />
+        <item itemvalue="JUnit.ReimbServiceTest.testGetReimbByStatus" />
         <item itemvalue="JUnit.ReimbServiceTest" />
-        <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.AuthServiceTest.test_authenticate_throwsAuthenticationException_givenValidUnknownCredentials" />
-        <item itemvalue="JUnit.AuthServiceTest.test_authenticate_throwsInvalidRequestException_givenInvalidCredentials" />
+        <item itemvalue="JUnit.All in Project1" />
       </list>
     </recent_temporary>
   </component>
@@ -179,7 +172,10 @@
       <workItem from="1663217596230" duration="4099000" />
       <workItem from="1663250858802" duration="78811000" />
       <workItem from="1663528981350" duration="27284000" />
-      <workItem from="1663599935549" duration="5432000" />
+      <workItem from="1663599935549" duration="13070000" />
+      <workItem from="1663735051702" duration="124000" />
+      <workItem from="1663778074223" duration="2139000" />
+      <workItem from="1663856050020" duration="257000" />
     </task>
     <task id="LOCAL-00001" summary="fleshed out core classes and updated maven file for apache tomcat implementation.">
       <created>1662494617417</created>
@@ -257,6 +253,12 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project1$ReimbServiceTest_testGetReimbByUserId.ic" NAME="ReimbServiceTest.testGetReimbByUserId Coverage Results" MODIFIED="1663778753742" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>reimbursements.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Project1$ReimbServiceTest.ic" NAME="ReimbServiceTest Coverage Results" MODIFIED="1663778614686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>reimbursements.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/Project1$AuthServiceTest_test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials.ic" NAME="AuthServiceTest.test_authenticate_returnsSuccessfully_givenValidAndKnownCredentials Coverage Results" MODIFIED="1662737948851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>authentication.*</FILTER>
     </SUITE>

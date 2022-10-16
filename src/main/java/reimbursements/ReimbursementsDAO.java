@@ -134,11 +134,6 @@ public class ReimbursementsDAO {
 
             pstmt.executeUpdate();
 
-            ResultSet rs = pstmt.getGeneratedKeys();
-            rs.next();
-            newReimbursements.setReimb_id(rs.getString("reimb_id"));
-
-
 
         } catch (SQLException e) {
 
