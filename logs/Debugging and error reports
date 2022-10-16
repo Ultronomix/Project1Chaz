@@ -1,0 +1,27 @@
+- (09/2/2022 5:49PM) Issues with file transferring and organizing, new main branch created, (main2)
+
+- (09/2/2022 8:01PM) rerun of postgres connection
+
+- (9/3/2022 12:22PM) compiled and ran code after adding User, UserDAO, Role, and ShinobiApp classes and data
+ 
+- (9/05/2022 1:15PM) generating NullPointerException
+
+- (9/5/2022 1:37PM) app generating no errors but Exception unaccounted for, exception time above.
+
+- (9/5/2022 3:50PM) Did another compile and run in meeting to identify and later fix bugs. redo ConnectionFactory class.
+(main method not needed, refer to TaskmasterApp.
+
+- (9/6/2022 3:20PM) fixed error on userResponse issue and all other syntax errors. program has initiated one build to
+parse thru errors. clean with no syntax errors atm. now working on DB dummy data and moving to resources
+folder in Java .
+
+- (9/7/2022 12:17PM) added end point connections for username, email and password authentication and took security procedures to
+not present user password info. build of all cumulative classes was a success. more data to be added
+
+- (9/7/2022 2:26PM) performed another build after LocalDateTime.now method added. Build successful/no errors or exceptions thrown.
+
+- (9/8/2022 7:23AM) ran program thru IDE before modification of LocalDateTime.now method. adding toString method.
+
+- (9/11/2022 3:57PM) tried to login thru postman and am returned a 500 error. will look into debugging the issue.
+
+-(9/12/2022 2:12PM) ran project for postman testing and am finding issues with attaining individual user info and put methods.
